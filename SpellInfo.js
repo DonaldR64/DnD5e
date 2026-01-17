@@ -160,6 +160,29 @@
             macro: "!Spell;Conjure Animals;%Level%;%Selected%",
         },
 
+
+        "Cone of Cold": {
+            name: "Cone of Cold",
+            level: 5,
+            range: 60,
+            spellType: "Area",
+            base: '8d8',
+            sLevel: [0,0,0,0,0,'8d8','9d8'],
+            damageType: "cold",
+            savingThrow: "constitution",
+            saveEffect: "Half Damage",
+            area: 'Cone',
+            areaEffect: "Damage",
+            tempImg: 'https://files.d20.io/images/105823565/P035DS5yk74ij8TxLPU8BQ/thumb.png?1582679991',
+            emote: "A blast of cold air erupts from %%Caster%%'s hands",
+            tempSize: 5,
+            sound: "Flames",
+            macro: '!Spell;Cone of Cold;%Level%',
+            fx: "breath-frost",
+        },
+
+
+
         "Crown of Madness": {
             name: "Crown of Madness",
             level: 2,
@@ -442,6 +465,22 @@
             tempSize: 'Level * 40',
         },
 
+
+        "Greater Invisibility": {
+            name: "Greater Invisibility",
+            level: 4,
+            range: 5,
+            duration: 10,
+            concentration: true,
+            spellType: "Misc",
+            emote: "You or a creature you touch becomes invisible until the spell ends. Anything the target is wearing or carrying is invisible as long as it is on the target’s person.",
+            macro: "!Spell;Greater Invisibility;4;%Selected%;%Target%",
+            sound: "Angels",
+        },
+
+
+
+
         "Guiding Bolt": {
             name: "Guiding Bolt",
             level: 1,
@@ -543,6 +582,30 @@
             failText: " and is Held",
             emote: "The Target can make a Wisdom Save at the end of each of its turns.",
         },
+
+        "Ice Storm": {
+            level: 4,
+            name: "Ice Storm",
+            range: 300,
+            spellType: "Area",
+            area: 'Square',
+            areaEffect: "Damage",
+            base: '2d8',
+            sLevel: [0,0,0,0,'2d8','3d8','4d8'],
+            damageType: "bludgeoning",
+            base2: '4d6',
+            damageType2: "cold",
+            moveEffect: "map",
+            tempImg: 'https://files.d20.io/images/470245401/Ng752wa8aromwPeXjumBCA/thumb.png?1767632656',
+            tempSize: 40,
+            sound: "Thunder",
+            macro: '!Spell;Ice Storm;%Level%',
+            emote: "A hail of rock-hard ice pounds to the ground in a 20-foot-radius, 40-foot-high cylinder centered on a point within range. Hailstones turn the storm’s area of effect into difficult terrain until the end of your next turn.", 
+            charID: '-OiE7OCHSibssu2PskVE',
+        },
+
+
+
 
         "Lightning Bolt": {
             name: "Lightning Bolt",

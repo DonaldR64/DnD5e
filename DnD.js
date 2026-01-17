@@ -131,6 +131,8 @@ const DnD = (() => {
         "Putrid Radiance": "Poison::2006492",
         "Crown of Madness": "Charmed::2006504",
         "Shield": "Shield_Armor::1432085",
+        "Greater Invisibility":"Invisible::2006516",
+        
     }
 
     const Incapacitated = ["Paralyzed","Stunned","Unconscious","Incapacitated","Sleep","Hold Person"];
