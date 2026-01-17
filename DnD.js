@@ -3765,6 +3765,44 @@ log(rituals)
                 },
 
             },
+        "Morgantha": 
+            {
+                type: "Transform",
+                "Two": {
+                    cID: "-Oj8D_m5mOBzLJV34pcx",
+                    size: 70,
+                    hp: 156,
+                    change: true,
+                },
+
+            },
+                "Bella": 
+            {
+                type: "Transform",
+                "Two": {
+                    cID: "-Oj8E7t5lifWFajB1VF8",
+                    size: 140,
+                    hp: 156,
+                    change: true,
+                },
+
+            },
+                "Offalia": 
+            {
+                type: "Transform",
+                "Two": {
+                    cID: "-Oj8E7zSjmSOjGfm7rGR",
+                    size: 140,
+                    hp: 156,
+                    change: true,
+                },
+
+            },
+
+
+
+
+
 
         }
 

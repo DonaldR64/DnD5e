@@ -274,6 +274,7 @@
             fx: "explode-slime",
         },
 
+
         "Explosive Blast": {
             //Izek
             name: "Explosive Blast",
