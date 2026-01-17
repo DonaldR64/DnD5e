@@ -4276,6 +4276,7 @@ log("Is Spell: " + model.isSpell)
                 layer: "objects",
             })
             _.each(tokens,token => {
+    log(token.get("name"))
                 _.each(covenNames, name => {
                     if (token.get("name").includes(name)) {
                         token.set("bar1_value",tok.get("bar1_value"));
