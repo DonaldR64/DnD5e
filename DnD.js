@@ -1424,6 +1424,11 @@ log(state.DnD.spells)
             disadv = true;
             disAdvReasons.push("Restrained");
         }
+        if (stat === "dexterity" && markers.includes("Slow")) {
+            disadv = true;
+            disAdvReasons.push("Slow");
+        }
+
 
         let finalAdv = 0;
         if (adv === true && disadv === false) {finalAdv = 1};
@@ -2092,7 +2097,7 @@ log(weapon)
 
         let positive = ["Invisible","Advantage"];
         let attNegative = ["Blind","Frightened","Poisoned","Disadvantage","Heat Metal","Blindness"];
-        let defNegative = ["Blind","Disadvantage","Blindness"];
+        let defNegative = ["Blind","Disadvantage","Blindness","Slow"];
 
         let advantage = false;
         let advText = []; 
