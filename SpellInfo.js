@@ -815,6 +815,20 @@
             sound: "Angels",
         },
 
+        "Shield": {
+            name: "Shield",
+            level: 1,
+            bonusAction: true,
+            range: 5,
+            beneficial: true,
+            duration: 1,
+            spellType: "Misc",
+            emote: "An invisible barrier of magical force appears and protects you. Until the start of your next turn, you have a +5 bonus to AC, including against the triggering attack, and you take no damage from magic missile.",
+            macro: "!Spell;Shield;1;%Selected%;%Selected%",
+            sound: "Angels",
+        },
+
+
         "Shield of Faith": {
             name: "Shield of Faith",
             level: 1,

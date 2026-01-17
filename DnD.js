@@ -130,6 +130,7 @@ const DnD = (() => {
         "Ray of Enfeeblement": "Poison::2006492",
         "Putrid Radiance": "Poison::2006492",
         "Crown of Madness": "Charmed::2006504",
+        "Shield": "Shield_Armor::1432085",
     }
 
     const Incapacitated = ["Paralyzed","Stunned","Unconscious","Incapacitated","Sleep","Hold Person"];
@@ -1911,6 +1912,9 @@ log(weapon)
         if (defMarkers.includes("Mage Armour")) {
             ac = 13 + defender.statBonus.dexterity;
         }
+        if (defMarkers.includes("Shield")) {
+            ac += 5;
+        }
         if (defMarkers.includes("Barkskin")) {
             ac = Math.max(16,ac);
         }
@@ -2515,13 +2519,21 @@ log(abilityName)
             if (defMarkers.includes("Shield of Faith")) {
                 ac += 2;
             }
-            let cover = CheckCover(defender);
-            if (cover === "Light") {
-                ac += 2;
+            if (defMarkers.includes("Mage Armour")) {
+                ac = 13 + defender.statBonus.dexterity;
+            }
+            if (defMarkers.includes("Shield")) {
+                ac += 5;
             }
             if (defMarkers.includes("Barkskin")) {
                 ac = Math.max(16,ac);
             }
+            let cover = CheckCover(defender);
+            if (cover === "Light") {
+                ac += 2;
+            }
+
+
 
             if (spell.autoHit === "No") {
                 if (attackResult.roll === 20) {crit = true};
@@ -3060,8 +3072,8 @@ log("Cumulative Slots: " + cumulativeSS)
                         }                                 
                         macro = SpellInfo[name].macro || macro;
                         macro = macro.replace("%Level%",levelMacro);
-                        macro = macro.replace("%Selected%","&#64;&#123;selected&#124;token&#95;id&#125;");
-                        macro = macro.replace("%Target%","&#64;&#123;target&#124;Target1&#124;token&#95;id&#125;");
+                        macro = macro.replace(/%Selected%/g,"&#64;&#123;selected&#124;token&#95;id&#125;");
+                        macro = macro.replace(/%Target%/g,"&#64;&#123;target&#124;Target1&#124;token&#95;id&#125;");
                         macro = macro.replace("%Target1%","&#64;&#123;target&#124;Target1&#124;token&#95;id&#125;");
                         macro = macro.replace("%Target2%","&#64;&#123;target&#124;Target2&#124;token&#95;id&#125;");
                         macro = macro.replace("%Target3%","&#64;&#123;target&#124;Target3&#124;token&#95;id&#125;");
@@ -4026,9 +4038,11 @@ log("Start Models Round: " + model.name)
         if (state.DnD.conSpell[model.id]) {
             spellIDs.push(state.DnD.conSpell[model.id]);
         }
-        let arr2 = state.DnD.regSpells;
-        if (arr2.length > 0) {
-            spellIDs.concat(arr2);
+log("Con Spells: " + spellIDs)
+        let arr2 = state.DnD.regSpells[model.id] || [];
+log("Reg Spells: " + arr2)
+        if (arr2 && arr2.length > 0) {
+            spellIDs = spellIDs.concat(arr2);
         }
 log("Own Spell IDs")
 log(spellIDs)
