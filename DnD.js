@@ -132,6 +132,7 @@ const DnD = (() => {
         "Crown of Madness": "Charmed::2006504",
         "Shield": "Shield_Armor::1432085",
         "Greater Invisibility":"Invisible::2006516",
+        "Tasha's Hideous Laughter": "Prone::2006547",
         
     }
 

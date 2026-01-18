@@ -1023,6 +1023,21 @@
         },
 
 
+        "Tasha's Hideous Laughter": {
+            name: "Tasha's Hideous Laughter",
+            level: 1,
+            range: 30,
+            duration: 10,
+            concentration: true,
+            when: "endAll",
+            spellType: "Misc",
+            macro: "!Spell;Tasha's Hideous Laughter;%Level%;%Selected%;%Target%",
+            sound: "Sound",
+            savingThrow: "wisdom",
+            saveText: " and resists.",
+            failText: " and is prone, laughing hysterically",
+            emote: "The Target can make a Wisdom Save at the end of each of its turns, or when it takes damage (if by damage,the target has advantage on its save)",
+        },
 
 
         "Thunderous Smite": {
