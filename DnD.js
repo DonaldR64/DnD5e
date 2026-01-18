@@ -4373,7 +4373,7 @@ log("Is Spell: " + model.isSpell)
                 })
                 log(names);
                 log(state.DnD)
-
+                log(pageInfo)
                 break;
             case '!SpecialAbility':
                 SpecialAbility(msg);
