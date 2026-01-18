@@ -3584,21 +3584,22 @@ log(rituals)
 
         SetupCard(model.name,itemName,model.displayScheme);
 
-        if (itemName === "Potion of Healing") {
+        if (itemName === "Potion of Healing" || itemName === "Potion of  Greater Healing") {
             let total = 0;
             let rolls = [];
-            for (let i=0;i<2;i++) {
+            if (itemName === "Potion of Healing") {d = 2} else {d = 4};
+
+            for (let i=0;i<4;i++) {
                 roll = randomInteger(4);
                 rolls.push(roll);
                 total += roll;
             }
-            total += 2;
-            let tip = "Rolls: " + rolls.toString() + " + 2";
+            total += d;
+            let tip = "Rolls: " + rolls.toString() + " + " + d;
             tip = '[' + total + '](#" class="showtip" title="' + tip + ')';
 
             outputCard.body.push("[B]" + tip + "[/b]" + " HP are restored")
         }
-
 
 
 
