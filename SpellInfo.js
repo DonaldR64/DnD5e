@@ -181,6 +181,16 @@
             fx: "breath-frost",
         },
 
+        "Counterspell": {
+            name: "Counterspell",
+            level: 3,
+            range: 60,
+            spellType: "Misc",
+            beneficial: true,
+            emote: "You attempt to interrupt a creature in the process of casting a spell. If the creature is cas⁠ting a sp⁠ell of level %Level% or lower, its spell fails and has no effect. If it is cas⁠ting a sp⁠ell of a higher level, make an ability check using your spellcasting ability bonus (Int/Wis/Cha). The DC equals 10 + the countered spell’s level. On a success, the creature’s spell fails and has no effect.",
+            macro: "!Spell;Counterspell;%Level%;%Selected%,%Target",
+        },
+
 
 
         "Crown of Madness": {
@@ -220,7 +230,7 @@
             duration: 1,
             beneficial: true,
             concentration: true,
-            range: "Self",
+            range: 5,
             spellType: "Misc",
             macro: "!Spell;Dispel Magic;%Level%;%Selected%",
             emote: "Choose one creature, object, or magical effect within range. Any spell of 3rd level or lower on the target ends. For each spell of 4th level or higher on the target, make an ability check using your spellcasting ability. The DC equals 10 + the spell’s level. On a successful check, the spell ends. At Higher Levels. When you cast this spell using a spell slot o f 4th level or higher, you automatically end the effects o f a spell on the target if the spell’s level is equal to or less than the level o f the spell slot you used.",             
@@ -595,6 +605,8 @@
             damageType: "bludgeoning",
             base2: '4d6',
             damageType2: "cold",
+            savingThrow: "dexterity",
+            saveEffect: "Half Damage", 
             moveEffect: "map",
             tempImg: 'https://files.d20.io/images/470245401/Ng752wa8aromwPeXjumBCA/thumb.png?1767632656',
             tempSize: 40,

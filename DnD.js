@@ -205,6 +205,10 @@ const DnD = (() => {
             this.class = aa.class || " ";
             this.level = parseInt(aa.level);
 
+            if (this.name.includes("Haevan")) {
+                this.level = parseInt(Attribute('-Ody8dmoHKTxM6niN9LG',"level"))
+            }
+
             this.immunities = (aa.npc_immunities || " ").toLowerCase();
             this.conditionImmunities = (aa.npc_condition_immunities || " ").toLowerCase();
             this.resistances = (aa.npc_resistances || " ").toLowerCase();
@@ -2438,6 +2442,7 @@ log(abilityName)
             if (i>0) {final += "<br>"};
             let emote = emotes[i];
             emote = emote.replace(/%%Caster%%/g,caster.name);
+            emote = emote.replace(/%Level%/g,spell.castLevel);
             if (targetZero) {
                 emote = emote.replace(/%%Target%%/g,targetZero.name);
             }
@@ -2540,9 +2545,7 @@ log(abilityName)
                 outputCard.body.push("[B]" + defender.name +" is Hit![/b]")
                 for (let i=0;i<spell.damage.length;i++) {
 
-
-
-                    let rollResults = RollDamage(spell.damage,crit); //total, diceText
+                    let rollResults = RollDamage(spell.damage[i],crit); //total, diceText
                     let damageResults = ApplyDamage(rollResults,dc,defender,spell);
                     let tip = rollResults.diceText;      
                     tip = '[' + damageResults.total + '](#" class="showtip" title="' + tip + ')';
@@ -2875,8 +2878,10 @@ log("in party: " + m.inParty)
                         //area = damage or effect
                         if (type === "End" || type === "ModelMove") {SetupCard(model.name,m.name,model.displayScheme)}
                         if (spell.effect.includes("Damage")) {
-                            let rollResults = SD1(spell);
-                            SpellDamage(rollResults,spell,model);
+                            _.each(spell.damage,damage => {
+                                let rollResults = SD1(damage,spell);
+                                SpellDamage(rollResults,spell,model);
+                            })
                         }
                         if (spell.effect.includes("Effect")) {
                             SpellEffect(spell,model);
@@ -2894,8 +2899,8 @@ log("in party: " + m.inParty)
 
     }
 
-    const SD1 = (spell) => {
-        let rollResults = RollDamage(spell.damage,false); //total, diceText
+    const SD1 = (damage,spell) => {
+        let rollResults = RollDamage(damage,false); //total, diceText
         tip = '[' + rollResults.total + '](#" class="showtip" title="' + rollResults.diceText + ')'
         outputCard.body.push("Total: " + tip + " " + Capit(spell.damageType) + " Damage");   
         if (spell.savingThrow && spell.savingThrow != "No") {
@@ -2923,7 +2928,6 @@ log("in party: " + m.inParty)
 
     const SpellDamage = (rollResults,spell,model) => {
         let damageResults = (ApplyDamage(rollResults,spell.dc,model,spell));
-        let saveTip = "";
         if (!damageResults.save) {
             outputCard.body.push(model.name + " takes [#ff0000]" + damageResults.total + "[/#] Damage" + damageResults.irv);
         } else if (damageResults.save !== "NA") {
@@ -2991,7 +2995,7 @@ log("Here2")
             if (m.id !== model.id && m.id !== caster.id) {
                 if (Venn(m.Squares(),square) === true) {
                     SetupCard("Flaming Sphere","Movement",caster.displayScheme);
-                    let rollResults = SD1(spell);
+                    let rollResults = SD1(spell.damage,spell);
                     SpellDamage(rollResults,spell,m);
                     outputCard.body.push("[hr]");
                     outputCard.body.push("The Flaming Sphere stops Moving");
@@ -3458,13 +3462,23 @@ log(rituals)
         }
 
         if (spell.areaEffect && spell.areaEffect.includes("Damage")) {
-            outputCard.body.push("[hr]")
-            outputCard.body.push("[hr]")
 
             let rollResults = [];
             _.each(spell.damage,damage => {
-                rollResults.push(SD1(spell));
+                let results = RollDamage(damage,false);
+                rollResults.push(results);
+                tip = '[' + results.total + '](#" class="showtip" title="' + results.diceText + ')'
+                outputCard.body.push("Total: " + tip + " " + Capit(damage.split(",")[1]) + " Damage");   
             })
+            if (spell.savingThrow && spell.savingThrow != "No") {
+                outputCard.body.push(Capit(spell.savingThrow) + " Save = " + spell.saveEffect);
+            } else {
+                outputCard.body.push("(No Saving Throw)");
+            }
+
+            outputCard.body.push("[hr]")
+            outputCard.body.push("[hr]")
+
             _.each(targets,target => {
                 _.each(rollResults,rollResult => {
                     SpellDamage(rollResult,spell,target);
@@ -3918,7 +3932,6 @@ log(rituals)
         })
 
 
-
         if (!change || change === false) {
             outputCard.body.push("Wild Shape to " + shape);
             PrintCard();
@@ -4017,13 +4030,14 @@ log(rituals)
                 SetupCard(model.name,"Turn " + state.DnD.combatTurn,model.displayScheme);
                 ModelsRound(model);
                 state.DnD.lastMoved = model.id;
+                PrintCard();
             }
         } else {
             SetupCard("Turn " + state.DnD.combatTurn,"","Red");
             state.DnD.lastMoved = "";
             //Start of Turn things
+            PrintCard();
         }
-        PrintCard();
     }
 
     const EndCombat = () => {
@@ -4108,7 +4122,7 @@ log(spellName)
                 }
 
                 if (model.inParty === true) {
-                    outputCard.body.push("The character is affected by " + spell.name + ", requiring a " + Capit(spell.savingThrow) + " Save with a DC of " + spellInfo.dc);
+                    outputCard.body.push("The character is affected by " + spell.name + ", requiring a " + Capit(spell.savingThrow) + " Save with a DC of " + spell.dc);
                     if (spell.when === "action") {
                         outputCard.body.push("The Character can use its Action to make the Save");
                     } else if (spell.when === "endAll" || spell.when === "end") {
