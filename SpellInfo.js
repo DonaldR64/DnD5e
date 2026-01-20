@@ -367,7 +367,24 @@
             failTextAll: "Creatures that fail drop whatever they are holding and become frightened for the duration. While frightened by this spell, a creature must take the Dash action and move away from the caster by the safest available route on each of its turns, unless there is nowhere to move. If the creature ends its turn in a location where it doesn’t have line of sight to the caster, the creature can make a Wisdom saving throw. On a successful save, the spell ends for that creature.",
         },
 
-
+        "Fireball": {
+            name: "Fireball",
+            level: 3,
+            range: 150,
+            spellType: "Area",
+            base: '8d6',
+            sLevel: [0,0,0,"8d6","9d6","10d6","11d6"],
+            damageType: "fire",
+            savingThrow: "dexterity",
+            saveEffect: "Half Damage",
+            area: 'Square',
+            areaEffect: "Damage",
+            tempImg: "https://files.d20.io/images/469625735/mK7gnOSOteATSiJs5Z7riA/thumb.png?1767216572",
+            tempSize: 40,
+            sound: "Explosion",
+            macro: '!Spell;Fireball;%Level%',
+            fx: "explosion-fire",
+        },
 
         "Fire Bolt": {
             name: "Fire Bolt",

@@ -1264,8 +1264,8 @@ log(defender.vulnerabilities)
 
         if (damageInfo.spell === true && defender.resistances.includes("magic resistance")) {
             adv = true;
-            saveTip = "Advantage to Save from Magic Resistance";
-            irv = " [#ff0000][Advantage][/#]";
+            saveTip += "<br>Advantage to Save from Magic Resistance";
+            irv += " [#ff0000][Advantage][/#]";
         }
         if (adv === true && disadv === false) {
             adv = 1;
