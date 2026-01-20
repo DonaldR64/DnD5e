@@ -3848,7 +3848,17 @@ log(rituals)
                 },
 
             },
+        "Gallows Speaker": 
+            {
+                type: "Transform",
+                "Two": {
+                    cID: "-OjSMy1GYBmb44TFZvC4",
+                    size: 140,
+                    hp: 134,
+                    change: true,
+                },
 
+            },
 
 
 
@@ -3994,6 +4004,13 @@ log(rituals)
         })
         Combat();
     }
+
+    const PlaySounds = (msg) => {
+        let sound = msg.content.split(";")[1];
+        PlaySound(sound);
+    }
+
+
 
     const Combat = () => {
         if (!state.DnD.combatTurn || state.DnD.combatTurn === 0) {return};
@@ -4478,6 +4495,9 @@ log("Is Spell: " + model.isSpell)
                 break;
             case '!ApplyMarker':
                 ApplyMarker(msg);
+                break;
+            case '!PlaySounds':
+                PlaySounds(msg);
                 break;
         }
     };
