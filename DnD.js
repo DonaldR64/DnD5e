@@ -2466,18 +2466,6 @@ log(abilityName)
 
         outputCard.body.push(Emote(spell));
 
-        if (spell.cLevel && spell.cLevel[caster.casterLevel]) {
-            spell.base = spell.cLevel[caster.casterLevel];
-        }
-        if (level > spell.level) {
-            spell.base = spell.sLevel[level];
-        }
-
-
-        spell.damage = spell.base + "," + spell.damageType;
-        spell.type = "Spell";
-
-
         AddSpell(spell); //adds only if has duration
 
         for (let i=0;i<targetIDs.length;i++) {
@@ -2550,32 +2538,38 @@ log(abilityName)
 
             if ((attackTotal >= ac && attackResult.roll !== 1) || crit === true || spell.autoHit === "Yes") {
                 outputCard.body.push("[B]" + defender.name +" is Hit![/b]")
-                let rollResults = RollDamage(spell.damage,crit); //total, diceText
-                let damageResults = ApplyDamage(rollResults,dc,defender,spell);
-                let tip = rollResults.diceText;      
-                tip = '[' + damageResults.total + '](#" class="showtip" title="' + tip + ')';
-                let saveTip = "";
-                if (defender.inParty) {
-                    if (damageResults.save) {
-                        outputCard.body.push("Fail = " + tip + " " + Capit(rollResults.damageType) + " Damage" + damageResults.irv);
-                        outputCard.body.push("Save = " + damageResults.saveTip);
-                        //place marker info into state          
-                        if (Markers[spell.name]) {
-                            state.DnD.saveMarkers[defender.tokenID] = spell.name;
-                        }          
+                for (let i=0;i<spell.damage.length;i++) {
+
+
+
+                    let rollResults = RollDamage(spell.damage,crit); //total, diceText
+                    let damageResults = ApplyDamage(rollResults,dc,defender,spell);
+                    let tip = rollResults.diceText;      
+                    tip = '[' + damageResults.total + '](#" class="showtip" title="' + tip + ')';
+                    let saveTip = "";
+                    if (defender.inParty) {
+                        if (damageResults.save) {
+                            outputCard.body.push("Fail = " + tip + " " + Capit(rollResults.damageType) + " Damage" + damageResults.irv);
+                            outputCard.body.push("Save = " + damageResults.saveTip);
+                            //place marker info into state          
+                            if (Markers[spell.name]) {
+                                state.DnD.saveMarkers[defender.tokenID] = spell.name;
+                            }          
+                        } else {
+                            outputCard.body.push(saveTip + tip + " " + Capit(rollResults.damageType) + " Damage" + damageResults.irv);
+                            defender.token.set("status_" + Markers[spell.name],true);
+                        }
                     } else {
+                        if (damageResults.save) {
+                            saveTip = '[' + damageResults.save + '](#" class="showtip" title="' + damageResults.saveTip + ')'
+                        }
                         outputCard.body.push(saveTip + tip + " " + Capit(rollResults.damageType) + " Damage" + damageResults.irv);
-                        defender.token.set("status_" + Markers[spell.name],true);
-                    }
-                } else {
-                    if (damageResults.save) {
-                        saveTip = '[' + damageResults.save + '](#" class="showtip" title="' + damageResults.saveTip + ')'
-                    }
-                    outputCard.body.push(saveTip + tip + " " + Capit(rollResults.damageType) + " Damage" + damageResults.irv);
-                    if ((damageResults.save && damageResults.save !== "Saves") || (!damageResults.save)) {  
-                        defender.token.set("status_" + Markers[spell.name],true);
+                        if ((damageResults.save && damageResults.save !== "Saves") || (!damageResults.save)) {  
+                            defender.token.set("status_" + Markers[spell.name],true);
+                        }
                     }
                 }
+            
                 if (spell.note) {
                     outputCard.body.push("[hr]");
                     outputCard.body.push(spell.note);
@@ -2690,7 +2684,21 @@ log(abilityName)
         if (level > spell.level && spell.sLevel) {
             spell.base = spell.sLevel[level] || 0;
         }
-        spell.damage = spell.base + "," + spell.damageType;
+
+        spell.damage = [spell.base + "," + spell.damageType];
+
+        if (spell.base2) {
+            if (spell.cLevel2 && spell.cLevel2[casterLevel]) {
+                spell.base2 = spell.cLevel2[casterLevel] || 0;
+            }
+            if (level > spell.level && spell.sLevel2) {
+                spell.base = spell.sLevel2[level] || 0;
+            }
+
+            spell.damage.push(spell.base2 + "," + spell.damageType2);
+        }
+
+        spell.type = "Spell";
 
 
         if (spell.spellType === "DirectAttack") {
@@ -3450,12 +3458,18 @@ log(rituals)
         }
 
         if (spell.areaEffect && spell.areaEffect.includes("Damage")) {
-            let rollResults = SD1(spell);
             outputCard.body.push("[hr]")
             outputCard.body.push("[hr]")
+
+            let rollResults = [];
+            _.each(spell.damage,damage => {
+                rollResults.push(SD1(spell));
+            })
             _.each(targets,target => {
-                SpellDamage(rollResults,spell,target);
-                targetIDs.push(target.id);
+                _.each(rollResults,rollResult => {
+                    SpellDamage(rollResult,spell,target);
+                    targetIDs.push(target.id);
+                })
             })
         }
         FX(spell.fx,caster,spellTarget)
