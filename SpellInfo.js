@@ -907,6 +907,28 @@
             sound: "Angels",
         },
 
+        "Shatter": {
+            name: "Shatter",
+            level: 2,
+            range: 60,
+            spellType: "Area",
+            area: "Square",
+            areaEffect: "Damage",
+            base: '3d8',
+            damageType: "thunder",
+            sLevel: [0,0,"3d8","4d8","5d8","6d8","7d6"],    
+            savingThrow: "constitution",
+            saveEffect: "Half Damage",       
+            sound: "Thunder",
+            macro: '!Spell;Shatter;%Level%',
+            tempImg: "https://files.d20.io/images/464597646/OEF2m9OvLSy6J_WrL4Mh7Q/thumb.png?1763433964",
+            emote: "A creature made of inorganic material such as stone, crystal, or metal has disadvantage on this saving throw",
+            tempSize: 20,
+            fx: 'burst-smoke',
+        },
+
+
+
         "Shield": {
             name: "Shield",
             level: 1,
