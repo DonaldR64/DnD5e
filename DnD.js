@@ -161,8 +161,8 @@ const DnD = (() => {
             return (s.x + "/" + s.y);
         }
         toSquare() {
-            let x = Math.round((this.x - 35)/70);
-            let y = Math.round((this.y - 35)/70);  
+            let x = Math.round((this.x - (35*pageInfo.scale))/(70*pageInfo.scale));
+            let y = Math.round((this.y - (35*pageInfo.scale))/(70*pageInfo.scale));  
             let sq = new Square(x,y);      
             return sq;
         }
@@ -174,8 +174,8 @@ const DnD = (() => {
             this.y = y;
         };
         toPoint() {
-            let x = this.x * 70 + 35;
-            let y = this.y * 70 + 35;
+            let x = this.x * (70*pageInfo.scale) + (35 * pageInfo.scale);
+            let y = this.y * (70*pageInfo.scale) + (35 * pageInfo.scale);
             return new Point(x,y);
         }
         toLabel() {
@@ -374,14 +374,15 @@ const DnD = (() => {
             let pt = this.Point();
             let w = this.token.get("width");
             let h = this.token.get("height");
-            if (w === 70 && h === 70) {
+            let d = 70 * pageInfo.scale;
+            if (w === d && h === d) {
                 squares.push(pt.toSquare());
             } else {
                 //define corners, pull in to be centres
-                let tL = new Point(pt.x - w/2 + 35,pt.y - h/2 + 35);
-                let bR = new Point(pt.x + w/2 - 35,pt.y + h/2 - 35);
-                for (let x = tL.x;x<= bR.x;x += 70) {
-                    for (let y = tL.y;y <= bR.y; y += 70) {
+                let tL = new Point(pt.x - w/2 + d/2,pt.y - h/2 + d/2);
+                let bR = new Point(pt.x + w/2 - d/2,pt.y + h/2 - d/2);
+                for (let x = tL.x;x<= bR.x;x += d) {
+                    for (let y = tL.y;y <= bR.y; y += d) {
                         let pt2 = new Point(x,y);
                         let sq = pt2.toSquare();
                         squares.push(sq);
@@ -962,6 +963,7 @@ log(model.name + ": " + id)
                 pObj.set("color",c);
             }
         })
+log(pageInfo)
     };
 
 
@@ -1381,13 +1383,6 @@ log(defender.vulnerabilities)
         let char = getObj("character", token.get("represents"));    
         let markers = model.Markers();
         outputCard.body.push(markers.toString());
-        if (markers.includes("Web")) {
-            outputCard.body.push("Has Web");
-        }
-
-log(token.get("statusmarkers"))
-log(PCs)
-log(state.DnD.spells)
 
 
         PrintCard();
@@ -1944,6 +1939,12 @@ log(weapon)
         if ((attackTotal >= ac && attackResult.roll !== 1) || crit === true) {
             outputCard.body.push("[B]Hit![/b]")
             let finalDamage = 0;
+            if (weapon.base1.split(",")[1].toLowerCase() === "web") {
+                defender.token.set("status_" + Markers["Web"],true);
+            }
+
+
+
             for (let i=0;i<weapon.damage.length;i++) {
                 //normally one eg 1d8+1, slashing damage for a longsword
                 //might have a 2nd eg 1d6,fire for a flaming longsword
