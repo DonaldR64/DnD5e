@@ -1827,7 +1827,7 @@ log(weapon)
         let magicBonus;
         if (weapon.info !== "Non-Magic" && weapon.info !== "No") {
             if (weapon.info.includes("+")) {
-                magicBonus = parseInt(weapon.info.characterAt(weapon.info.indexOf("+") + 1)) || 0;
+                magicBonus = parseInt(weapon.info.charAt(weapon.info.indexOf("+") + 1)) || 0;
                 attackBonus += magicBonus;
                 weapon.base1 = weapon.base1.replace(",","+"+ magicBonus + ",");
                 weapon.magic = "magic";
