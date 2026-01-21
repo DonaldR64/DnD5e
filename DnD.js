@@ -2246,13 +2246,15 @@ log(weapon)
         let emote = Tag[2];
         emote = emote.replace(/"/g,"");
         if (emote.includes("<<")) {
-            let char1 = emote.indexOf("<<") + 2;
-            let char2 = emote.indexOf(">>");
-            let substring = emote.substring(char1,char2);
-            let damageResults = RollDamage(substring)
-            let tip = damageResults.diceText;
-            tip = '[' + damageResults.total + " " + damageResults.damageType + '](#" class="showtip" title="' + tip + ')';
-            emote = emote.replace("<<" + substring + ">>",tip);
+            do {
+                let char1 = emote.indexOf("<<") + 2;
+                let char2 = emote.indexOf(">>");
+                let substring = emote.substring(char1,char2);
+                let damageResults = RollDamage(substring)
+                let tip = damageResults.diceText;
+                tip = '[' + damageResults.total + " " + damageResults.damageType + '](#" class="showtip" title="' + tip + ')';
+                emote = emote.replace("<<" + substring + ">>",tip);
+            } while (emote.includes("<<"))
         }
 
 
@@ -3360,7 +3362,7 @@ log(rituals)
             AddAbility("Attack",action,charID);
         }
 
-        spell.tempSize = (spell.tempSize * 70) / pageInfo.scaleNum;
+        spell.tempSize = (spell.tempSize * 70) / pageInfo.scaleNum * pageInfo.scale;
 
         let tok = ModelArray[spell.casterID].token; //place new token on casters token
         if (spell.displacedTokenID) {
@@ -3722,9 +3724,8 @@ log(rituals)
     }
 
 
-    summonToken = function(cID,left,top,size,pr,markers) {
-        if (!size) {size = 70};
-        if (!pr) {pr = -1};
+    summonToken = function(cID,left,top,size = 70,pr = -1,markers) {
+        size = size * pageInfo.scale;
         let character = getObj("character", cID);
         character.get('defaulttoken',function(defaulttoken){
             const dt = JSON.parse(defaulttoken);
@@ -3859,7 +3860,17 @@ log(rituals)
                 },
 
             },
+        "Vladimir": 
+            {
+                type: "Transform",
+                "Two": {
+                    cID: "-OjTh8YS3yLQimCaPT0c",
+                    size: 70,
+                    hp: 228,
+                    change: true,
+                },
 
+            },
 
 
 
@@ -3886,8 +3897,8 @@ log(rituals)
         let left = Math.max(model.token.get("left"));
         let top = Math.max(model.token.get("top"));
         if (size !== model.token.get("width")) {
-            left= Math.max(model.token.get("left") - 35,35*size/70);
-            top = Math.max(model.token.get("top") - 35,35*size/70);
+            left= Math.max(model.token.get("left") - 35,35*size/70*pageInfo.scale);
+            top = Math.max(model.token.get("top") - 35,35*size/70*pageInfo.scale);
         }
 
         let pr = -1;

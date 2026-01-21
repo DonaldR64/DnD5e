@@ -414,23 +414,24 @@
             emote: "%%Caster%% evokes a Fiery Blade as a Bonus Action",            
         },
 
-        "Flame Volley": {
-            //Izek
-            name: "Flame Volley",
+        "Gravepyre": {
+            //Vladimir
+            name: "Gravepyre",
             level: 0,
-            range: 60,
+            range: 120,
             spellType: "Area",
             area: "Square",
             areaEffect: "Damage",
-            base: '2d6',
+            base: '3d6',
             damageType: "fire",
+            base2: '3d6',
+            damageType2: "necrotic",
             savingThrow: "dexterity",
-            saveEffect: "No Damage",       
-            sound: "",
-            macro: '!Spell;Flame Volley;0',
+            saveEffect: "Half Damage",       
+            sound: "Explosion",
             tempImg: "https://files.d20.io/images/469625735/mK7gnOSOteATSiJs5Z7riA/thumb.png?1767216572",
             tempSize: 10,
-            fx: 'explode-fire',
+            fx: 'explode-death',
         },
         "Flaming Wave": {
             //Izek
@@ -859,7 +860,22 @@
             macro: '!Spell;Ray of Sickness;%Level%;%Selected%;%Target%',
         },
 
-
+        "Reaving Sweep": {
+            name: "Reaving Sweep",
+            level: 0,
+            range: 15,
+            spellType: "Area",
+            base: '6d6',
+            damageType: "slashing",
+            savingThrow: "constitution",
+            saveEffect: "Half Damage",
+            area: 'Cone',
+            areaEffect: "Damage",
+            tempImg: 'https://files.d20.io/images/105823565/P035DS5yk74ij8TxLPU8BQ/thumb.png?1582679991',
+            tempSize: 5,
+            sound: "Thunder",
+            fx: "breath-smoke",
+        },
 
         "Sacred Flame": {
             name: "Sacred Flame",
