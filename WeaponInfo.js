@@ -123,7 +123,12 @@
             type: "Melee",
             sound: "Sword",
         },
-
+        Greatsword: {
+            base1: '2d6,slashing',
+            properties: "",
+            type: "Melee",
+            sound: "Sword",
+        },
 
 
 
