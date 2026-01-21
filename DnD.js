@@ -3871,7 +3871,17 @@ log(rituals)
                 },
 
             },
+        "Baba": 
+            {
+                type: "Transform",
+                "Two": {
+                    cID: "-OjXQ8kg6dw-lUJxezN3",
+                    size: 70,
+                    hp: 135,
+                    change: true,
+                },
 
+            },
 
 
 

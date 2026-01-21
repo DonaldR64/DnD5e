@@ -433,6 +433,49 @@
             tempSize: 10,
             fx: 'explode-death',
         },
+
+        "Devouring Flies": {
+            //Baba Lysaga
+            name: "Devouring Flies",
+            level: 0,
+            range: 60,
+            spellType: "Area",
+            area: "Square",
+            areaEffect: "Damage",
+            base: '2d6',
+            damageType: "piercing",
+            savingThrow: "constitution",
+            saveEffect: "Half Damage",       
+            sound: "Flies",
+            tempImg: "https://files.d20.io/images/472540538/is9NmXw6UtolExwSfdWORQ/thumb.png?1769033424",
+            tempSize: 20,
+            emote: "Swarming flies fill a 10-foot-radius sphere centered on a point Baba Lysaga can see within 60 feet. As well as damage, targets must take 2 concentration checks to maintain spells if they have taken damage",
+            fx: 'burn-death',
+        },
+
+        "Evards Black Tentacles": {
+            name: "Evards Black Tentacles",
+            level: 4,
+            range: 90,
+            spellType: "Ongoing",
+            area: 'special',
+            effect: "Damage",
+            base: '3d6',
+            concentration: true,
+            duration: 10,
+            moveEffect: "map",
+            damageType: "bludgeoning",
+            savingThrow: "dexterity",
+            saveEffect: "No Damage",       
+            sound: "Flies",
+            tempImg: "https://files.d20.io/images/472539270/KTLsXaTHm-ZnKqoIZYK2cA/thumb.png?1769032718",
+            tempSize: 20,
+            emote: "Squirming, ebony tentacles fill a 20-foot square on ground that you can see within range. For the duration, these tentacles turn the ground in the area into difficult terrain. When a creature enters the affected area for the first time on a turn or starts its turn there, the creature must succeed on a Dexterity saving throw or take 3d6 bludgeoning damage and be restrai⁠ned by the tentacles until the spell ends. A creature that starts its turn in the area and is already restrai⁠ned by the tentacles takes 3d6 bludgeoning damage. A creature restrained by the tentacles can use its action to make a Strength or D⁠exterity check (its choice) against your spell save DC. On a success, it frees itself.",
+            fx: 'burn-death',
+            macro: '!Spell;Evards Black Tentacles;4',
+        },
+
+
         "Flaming Wave": {
             //Izek
             name: "Flaming Wave",
