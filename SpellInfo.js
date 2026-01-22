@@ -1,5 +1,5 @@
 
-    //Jan 20
+    //Jan 22
     const SpellInfo = {
         "Aid": {
             name: "Aid",
