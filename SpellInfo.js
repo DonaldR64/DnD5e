@@ -363,7 +363,7 @@
             sound: "Beam",
             macro: '!Spell;Fear;%Level%',
             fx: "breath-magic",
-            failText: " and is Feared",
+            failText: " is Feared",
             failTextAll: "Creatures that fail drop whatever they are holding and become frightened for the duration. While frightened by this spell, a creature must take the Dash action and move away from the caster by the safest available route on each of its turns, unless there is nowhere to move. If the creature ends its turn in a location where it doesn’t have line of sight to the caster, the creature can make a Wisdom saving throw. On a successful save, the spell ends for that creature.",
         },
 
@@ -743,7 +743,6 @@
         },
 
         "Melf's Acid Arrow": {
-//fix
             name: "Melf's Acid Arrow",
             level: 2,
             spellType: "DirectAttack",
@@ -753,7 +752,9 @@
             sLevel: [0,0,'4d4','5d4','6d4','7d4','8d4'],
             damageType: "acid",
             sound: "Laser",
-            emote: "A shimmering green arrow streaks toward the target and burst in a spray of acid. On a miss, the target still takes 5 acid damage",
+            emote: "A shimmering green arrow streaks toward the target and bursts in a spray of acid.",
+            onMiss: true,
+            onMissEmote: "%%Target%% is still sprayed with acid, taking <<2d4,acid>> damage",
             fx: "rocket-slime",
             macro: '!Spell;Melfs Acid Arrow;%Level%;%Selected%;%Target%',
         },

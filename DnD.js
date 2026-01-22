@@ -127,7 +127,7 @@ const DnD = (() => {
         "Fear": "Fear::1432026",
         "Blindness": "110-Darkness-Partial::5818056",
         "Ray of Enfeeblement": "419-Effect-Debuff::5818083",
-        "Ray of Enfeeblement": "Poison::2006492",
+        "Ray of Enfeeblement": "back-pain",
         "Putrid Radiance": "Poison::2006492",
         "Crown of Madness": "Charmed::2006504",
         "Shield": "Shield_Armor::1432085",
@@ -1264,7 +1264,7 @@ log(defender.vulnerabilities)
             irv = " [#ff0000][Disadvantage][/#]";
         }
 
-        if (damageInfo.spell === true && defender.resistances.includes("magic resistance")) {
+        if (damageInfo.spell === true && defender.resistances.includes("magic resistance") && damageInfo.savingThrow) {
             adv = true;
             saveTip += "<br>Advantage to Save from Magic Resistance";
             irv += " [#ff0000][Advantage][/#]";
@@ -1957,7 +1957,7 @@ log(weapon)
                 let damageResults = ApplyDamage(rollResults,dc,defender,weapon);
                 if (i===0 && strWeapon === true && attMarkers.includes("Ray of Enfeeblement")) {
                     damageResults.total = Math.round(damageResults.total/2);
-                    damageResults.irv += " [Feeble]";
+                    damageResults.irv += " [#ff0000][Feeble][/#]";
                 }
 
 
@@ -2052,16 +2052,8 @@ log(weapon)
 
             if (weapon.text) {
                 outputCard.body.push("[hr]");
-                if (weapon.text.includes("<<")) {
-                    let char1 = weapon.text.indexOf("<<") + 2;
-                    let char2 = weapon.text.indexOf(">>");
-                    let substring = weapon.text.substring(char1,char2);
-                    let damageResults = RollDamage(substring)
-                    let tip = damageResults.diceText;
-                    tip = '[' + damageResults.total + " " + damageResults.damageType + '](#" class="showtip" title="' + tip + ')';
-                    weapon.text = weapon.text.replace("<<" + substring + ">>",tip);
-                }
-                outputCard.body.push(weapon.text);
+                let text = EmoteSub(weapon.text,attacker.name,"",defender.name)
+                outputCard.body.push(text);
             }
 
 
@@ -2249,19 +2241,7 @@ log(weapon)
         let abilName = Tag[1];
         let emote = Tag[2];
         emote = emote.replace(/"/g,"");
-        if (emote.includes("<<")) {
-            do {
-                let char1 = emote.indexOf("<<") + 2;
-                let char2 = emote.indexOf(">>");
-                let substring = emote.substring(char1,char2);
-                let damageResults = RollDamage(substring)
-                let tip = damageResults.diceText;
-                tip = '[' + damageResults.total + " " + damageResults.damageType + '](#" class="showtip" title="' + tip + ')';
-                emote = emote.replace("<<" + substring + ">>",tip);
-            } while (emote.includes("<<"))
-        }
-
-
+        emote = EmoteSub(emote,model.name)
         SetupCard(model.name,abilName,model.displayScheme);
         outputCard.body.push(emote);
         PrintCard();
@@ -2434,8 +2414,9 @@ log(abilityName)
     }
 
     const Emote = (spell) => {
-        let caster = ModelArray[spell.casterID];
-        let targetZero = ModelArray[spell.targetIDs[0]];
+        let casterName = ModelArray[spell.casterID];
+        let targetName = ModelArray[spell.targetIDs[0]];
+        let level = spell.castLevel;
         let emotes = [];
         if (spell.emote) {emotes.push(spell.emote)};
         if (spell.duration && spell.name !== "Breathe") {
@@ -2444,31 +2425,49 @@ log(abilityName)
         if (spell.concentration === true) {
             emotes.push("The Spell requires Concentration");
         }
-        let final = "";
-        for (let i=0;i<emotes.length;i++) {
-            if (i>0) {final += "<br>"};
-            let emote = emotes[i];
-            emote = emote.replace(/%%Caster%%/g,caster.name);
-            emote = emote.replace(/%Level%/g,spell.castLevel);
-            if (targetZero) {
-                emote = emote.replace(/%%Target%%/g,targetZero.name);
-            }
-            final += emote;
-            if (emote.includes("<<")) {
-                let char1 = emote.indexOf("<<") + 2;
-                let char2 = emote.indexOf(">>");
-                let substring = emote.substring(char1,char2);
-                let damageResults = RollDamage(substring)
-                let tip = damageResults.diceText;
-                tip = '[' + damageResults.total + " " + damageResults.damageType + '](#" class="showtip" title="' + tip + ')';
-                emote = emote.replace("<<" + substring + ">>",tip);
-            }
-        }
+        let final = EmoteSub(emotes,casterName,level,targetName);
         if (spell.name === "Dragon's Breath")  {
             final = final.replace("magical",spell.damageType);
         }    
         return final;        
     }
+
+    const EmoteSub = (emotes,casterName,level,targetName) => {
+        if (Array.isArray(emotes) === false) {
+            emotes = [emotes];
+        }
+log(emotes)
+        let final = "";
+        for (let i=0;i<emotes.length;i++) {
+            if (i>0) {final += "<br>"};
+            let emote = emotes[i];
+            emote = emote.replace(/%%Caster%%/g,casterName);
+            emote = emote.replace(/%Level%/g,level);
+            if (targetName) {
+                emote = emote.replace(/%%Target%%/g,targetName);
+            }
+            if (emote.includes("<<")) {
+                do {
+                    let char1 = emote.indexOf("<<") + 2;
+                    let char2 = emote.indexOf(">>");
+                    let substring = emote.substring(char1,char2);
+log(substring)
+                    let damageResults = RollDamage(substring)
+log(damageResults)
+                    let tip = damageResults.diceText;
+                    tip = '[' + damageResults.total + " " + damageResults.damageType + '](#" class="showtip" title="' + tip + ')';
+                    emote = emote.replace("<<" + substring + ">>",tip);
+                } while (emote.includes("<<"))
+            }
+            final += emote;
+        }
+        return final;
+    }
+
+
+
+
+
 
     const DirectAttackSpell = (spell) => {
         let caster = ModelArray[spell.casterID];
@@ -2586,6 +2585,16 @@ log(abilityName)
                 }
             } else {
                 outputCard.body.push("[B]" + defender.name +" is Missed[/b]");
+                if (spell.onMiss) {
+                    let e = EmoteSub(spell.onMissEmote,caster.name,spell.level,defender.name)
+                    outputCard.body.push(e);
+                }
+
+
+
+
+
+
             }
             defender.token.set("status_" + Markers["Guiding Bolt"],false);
             FX(spell.fx,caster,defender);
