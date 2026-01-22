@@ -1734,8 +1734,12 @@ log(weapon)
         if (squares === 1) {
             inReach = true;
         }
-        if (weapon.properties.includes("Reach") && squares <= 2) {
-            inReach = true;
+        if (weapon.properties.includes("Reach")) {
+            //use reach for 2, or reach6 for 6 squares etc
+            let s = parseInt(weapon.properties.charAt(weapon.properties.indexOf("Reach") + 5)) || 2;
+            if (squares <= s) {
+                inReach = true;
+            }
         }
         if (inReach !== true && weapon.type.includes("Ranged") === false) {
             errorMsg.push("Target not in Reach");
@@ -2856,8 +2860,8 @@ log(spell)
         //interaction of spell and model
         if (!model) {return}
         let spellLists = {
-            "Start": ["Moonbeam","Web","Spirit Guardians"],
-            "ModelMove": ["Moonbeam","Web","Spike Growth"],
+            "Start": ["Moonbeam","Web","Spirit Guardians","Evards Black Tentacles"],
+            "ModelMove": ["Moonbeam","Web","Spike Growth","Evards Black Tentacles"],
             "End": ["Flaming Sphere"],
             "SpellMove": ["Flaming Sphere"],
         }
@@ -3724,7 +3728,7 @@ log(rituals)
     }
 
 
-    summonToken = function(cID,left,top,size = 70,pr = -1,markers) {
+    summonToken = function(cID,left,top,size = 70,pr = -1,markers = "") {
         size = size * pageInfo.scale;
         let character = getObj("character", cID);
         character.get('defaulttoken',function(defaulttoken){
@@ -3742,8 +3746,8 @@ log(rituals)
                 dt.statusmarkers = markers;
                 let newToken = createObj("graphic", dt);
                 let newModel = new Model(newToken);
-                if (pr > -1) {
-                    turnorder = JSON.parse(Campaign().get("turnorder"));
+                turnorder = JSON.parse(Campaign().get("turnorder"));
+                if (pr > 0) {
                     turnorder.unshift({
                         _pageid:    newToken.get("_pageid"),
                         id:         newToken.get("id"),
@@ -3751,7 +3755,17 @@ log(rituals)
                     });
                     //assumes is that players turn, so places this init at start
                     Campaign().set("turnorder", JSON.stringify(turnorder));
+                } else if (pr === 0) {
+                    let element = {
+                        _pageid:    newToken.get("_pageid"),
+                        id:         newToken.get("id"),
+                        pr:         1, 
+                    }
+                    let index = turnorder.map(e => e.custom).indexOf('Turn');
+                    turnorder.splice(index,0,element);
                 }
+                Campaign().set("turnorder", JSON.stringify(turnorder));
+
             } else {
                 sendChat('','/w gm Cannot create token for <b>'+character.get('name')+'</b>');
             }
@@ -4030,6 +4044,75 @@ log(rituals)
         let sound = msg.content.split(";")[1];
         PlaySound(sound);
     }
+
+    const Summon = (msg) => {
+        let Tag = msg.content.split(";");
+        let summonerID = msg.selected[0]._id;
+        let summonerToken = findObjs({type: "graphic", id: summonerID})[0];
+        let summonedName = Tag[1];
+        let summonedNumber = Tag[2];
+
+
+
+
+        let charID = '-Oe8qdnMHHQEe4fSqqhm';
+        let abilArray = findObjs({_type: "ability", _characterid: charID});
+        //clear old abilities
+        for(let a=0;a<abilArray.length;a++) {
+            abilArray[a].remove();
+        } 
+        let action = '!Summon2;' + summonedName + ";" + summonedNumber;
+        AddAbility("Summon " + summonedName,action,charID);
+
+        let targetToken = createObj("graphic", {
+            left: summonerToken.get("left"),
+            top: summonerToken.get("top"),
+            disableTokenMenu: true,
+            width: 70*pageInfo.scale, 
+            height: 70*pageInfo.scale,  
+            pageid: summonerToken.get("_pageid"),
+            imgsrc: 'https://files.d20.io/images/105823565/P035DS5yk74ij8TxLPU8BQ/thumb.png?1582679991',
+            layer: "objects",
+            represents: charID,
+        })
+        if (targetToken) {
+            toFront(targetToken);
+        } else {
+            sendChat("","Error in CreateObj")
+        }
+    }
+
+    const Summon2 = (msg) => {
+        let list = {
+            "Giant Centipedes": {id: "-OjXqKntDUwCcLRa_pWj", size: 70, pr: 0},
+            "Swamp Vine": {id: "-OjY-wrSnma5kpOsiqkB",size: 140, pr: 0},
+            "Wall of Thorns": {id: "-OjY8qRIp6wmP9jJtkhI",size: 280, pr: -1},
+        }
+        let Tag = msg.content.split(";");
+        let targetID = msg.selected[0]._id;
+        let targetToken = findObjs({type: "graphic", id: targetID})[0];
+        let summonedName = Tag[1];
+        let summonedNumber = Tag[2];
+
+        let summonedCharID = list[summonedName].id;
+
+
+        let posX = targetToken.get("left");
+        let posY = targetToken.get("top");
+        let distribution = [[0,0],[-1,0],[-1,-1],[0,-1],[1,-1],[1,0],[1,1],[0,1],[-1,1],[-2,0],[-2,-1],[-2,-2]];
+
+        let size = list[summonedName].size;
+        let pr = list[summonedName].pr;
+
+        for (let i=0;i<summonedNumber;i++) {
+            let x = posX + (distribution[i][0] * size * pageInfo.scale);
+            let y = posY + (distribution[i][1] * size * pageInfo.scale);
+            summonToken(summonedCharID,x,y,size,pr);
+        }
+        targetToken.remove();
+    }
+
+
 
 
 
@@ -4440,7 +4523,7 @@ log("Is Spell: " + model.isSpell)
                 })
                 log(names);
                 log(state.DnD)
-                log(pageInfo)
+                log(JSON.parse(Campaign().get("turnorder")))
                 break;
             case '!SpecialAbility':
                 SpecialAbility(msg);
@@ -4519,6 +4602,12 @@ log("Is Spell: " + model.isSpell)
                 break;
             case '!PlaySounds':
                 PlaySounds(msg);
+                break;
+            case '!Summon':
+                Summon(msg);
+                break;
+            case '!Summon2':
+                Summon2(msg);
                 break;
         }
     };
