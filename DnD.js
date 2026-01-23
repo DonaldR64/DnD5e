@@ -2424,7 +2424,11 @@ log(abilityName)
 
     const Emote = (spell) => {
         let casterName = ModelArray[spell.casterID].name;
-        let targetName = ModelArray[spell.targetIDs[0]].name;
+        if (ModelArray[spell.targetIDs[0]]) {
+            targetName = ModelArray[spell.targetIDs[0]].name
+        } else {
+            targetName = "No One";
+        }
         let level = spell.castLevel;
         let emotes = [];
         if (spell.emote) {emotes.push(spell.emote)};
