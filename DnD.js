@@ -133,7 +133,7 @@ const DnD = (() => {
         "Shield": "Shield_Armor::1432085",
         "Greater Invisibility":"Invisible::2006516",
         "Tasha's Hideous Laughter": "Prone::2006547",
-        
+        "Haste": "Effect_Speed_Haste::1431997",
     }
 
     const Incapacitated = ["Paralyzed","Stunned","Unconscious","Incapacitated","Sleep","Hold Person"];
@@ -1423,13 +1423,19 @@ log(defender.vulnerabilities)
             adv = true;
             advReasons.push("Dodge");
         }
-        if (stat === "dexterity" && restrained === true) {
-            disadv = true;
-            disAdvReasons.push("Restrained");
-        }
-        if (stat === "dexterity" && markers.includes("Slow")) {
-            disadv = true;
-            disAdvReasons.push("Slow");
+        if (stat === 'dexterity') {
+            if (restrained === true) {
+                disadv = true;
+                disAdvReasons.push("Restrained");
+            }
+            if (markers.includes("Slow")) {
+                disadv = true;
+                disAdvReasons.push("Slow");
+            }
+            if (markers.includes("Haste")) {
+                adv = true;
+                advReasons.push("Haste");
+            }
         }
 
 
@@ -1925,7 +1931,9 @@ log(weapon)
         if (defMarkers.includes("Barkskin")) {
             ac = Math.max(16,ac);
         }
-
+        if (defMarkers.includes("Haste")) {
+            ac += 2;
+        }
 
         let cover = CheckCover(defender);
         if (cover === "Light") {
@@ -2415,8 +2423,8 @@ log(abilityName)
     }
 
     const Emote = (spell) => {
-        let casterName = ModelArray[spell.casterID];
-        let targetName = ModelArray[spell.targetIDs[0]];
+        let casterName = ModelArray[spell.casterID].name;
+        let targetName = ModelArray[spell.targetIDs[0]].name;
         let level = spell.castLevel;
         let emotes = [];
         if (spell.emote) {emotes.push(spell.emote)};
@@ -2820,7 +2828,10 @@ log(spell)
             let target = ModelArray[spell.targetIDs[0]];
             target.token.set(marker,false);
         }
-
+        if (spell.name === "Haste") {
+            let model = ModelArray[spell.targetIDs[0]];
+            sendChat("",model.name + " misses its next turn due to Lethargy from Haste ending");
+        }
 
 
 

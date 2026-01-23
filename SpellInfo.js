@@ -586,6 +586,18 @@
             fx: "beam-smoke",
         },
 
+        "Haste": {
+            name: "Haste",
+            beneficial: true,
+            level: 3,
+            range: 30,
+            spellType: "Misc",
+            emote: "Until the spell ends, %%Target%%'s speed is doubled, it gains a +2 bonus to AC, it has advantage on Dexterity saving throws, and it gains an additional action on each of its turns. That action can be used only to take the Attack (one weapon attack only), Dash, Disengage, Hide, or Use an Object action. When the spell ends, the target can’t move or take actions until after its next turn, as a wave of lethargy sweeps over it.",
+            macro: "!Spell;Haste;3;%Selected%;%Target%",
+            sound: "FFire",
+            concentration: true,
+            duration: 10,
+        },
 
 
          "Healing Word": {
