@@ -1822,9 +1822,10 @@ log(weapon)
             attackBonus += bless;
         }
         if (attMarkers.includes("Sacred Weapon") && weapon.type === "Melee") {
-            attackBonus += 2;
+            let sb = attacker.statBonus.charisma;
+            attackBonus += sb;
             weapon.magic = "magic";
-            additionalText += "<br>inc +2 Sacred Weapon";
+            additionalText += "<br>inc " + sb + "Sacred Weapon";
         }
 
         //Magic Items
