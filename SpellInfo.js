@@ -229,12 +229,12 @@
             bonusAction: false,
             duration: 1,
             beneficial: true,
-            concentration: true,
-            range: 5,
+            range: 120,
             spellType: "Misc",
             macro: "!Spell;Dispel Magic;%Level%;%Selected%",
-            emote: "Choose one creature, object, or magical effect within range. Any spell of 3rd level or lower on the target ends. For each spell of 4th level or higher on the target, make an ability check using your spellcasting ability. The DC equals 10 + the spell’s level. On a successful check, the spell ends. At Higher Levels. When you cast this spell using a spell slot o f 4th level or higher, you automatically end the effects o f a spell on the target if the spell’s level is equal to or less than the level o f the spell slot you used.",             
+            emote: "Choose one creature, object, or magical effect within 120ft. Any spell of level %Level% or lower on the target ends. For each spell of a level higher than %Level% on the target, make an ability check using your spellcasting ability (Int/Wis/Cha). The DC equals 10 + the target spell’s level. On a successful check, the spell ends.",             
             sound: "Angels",
+
         },       
 
 
@@ -1071,7 +1071,7 @@
             area: 'special',
             effect: "Effect",
             moveEffect: "map",
-            tempImg: 'https://files.d20.io/images/470245401/Ng752wa8aromwPeXjumBCA/thumb.png?1767632656',
+            tempImg: 'https://files.d20.io/images/472767469/cVHPcAcqJ8As8a0hKoKA3A/thumb.png?1769191432',
             tempSize: 80,
             sound: "Thunder",
             macro: '!Spell;Sleet Storm;3',
@@ -1221,6 +1221,13 @@
             tempSize: 20,
             fx: "",
         },
+
+
+
+
+
+
+
 
         "Wrathful Smite": {
             name: "Wrathful Smite",
