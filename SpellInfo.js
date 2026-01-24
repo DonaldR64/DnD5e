@@ -661,8 +661,8 @@
             macro: "!Spell;Hold Person;%Level%;%Selected%;%Target%",
             sound: "Sound",
             savingThrow: "wisdom",
-            saveText: " and is not Held.",
-            failText: " and is Held",
+            saveText: " is not Held.",
+            failText: " is Held",
             emote: "The Target can make a Wisdom Save at the end of each of its turns.",
         },
 
