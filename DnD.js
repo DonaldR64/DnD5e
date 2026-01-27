@@ -2315,7 +2315,24 @@ log(abilityName)
             outputCard.body.push("This feat can't be used on the recipient until that character does a short or long rest");
         }
 
+        if (abilityName === "Entangling Plants") {
+            SetupCard(attacker.name,"Entangling Plants",attacker.displayScheme);
+            img = getCleanImgSrc('https://files.d20.io/images/464592489/MlFXxUdwYnkx-S5mHam-KQ/thumb.png?1763430837');
+            let newToken = createObj("graphic", {
+                left: attacker.token.get("left"),
+                top: attacker.token.get("top"),
+                disableTokenMenu: true,
+                width: (35 * 70) / pageInfo.scaleNum * pageInfo.scale, 
+                height: (35 * 70) / pageInfo.scaleNum * pageInfo.scale,  
+                name: "",
+                pageid: attacker.token.get("_pageid"),
+                imgsrc: img,
+                layer: "map",
+            })
+            toFront(newToken);
+            outputCard.body.push("Grasping roots and vines sprout in a 15-foot radius centered on the blight, withering away after 1 minute. For the duration, that area is difficult terrain for nonplant creatures. In addition, each creature of the blight’s choice in that area when the plants appear must succeed on a DC 12 Strength saving throw or become restrained. A creature can use its action to make a DC 12 Strength check, freeing itself or another entangled creature within reach on a success.");
 
+        }
 
 
 
