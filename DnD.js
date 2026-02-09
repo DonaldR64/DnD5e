@@ -2851,7 +2851,9 @@ log(spell)
         }
         if (spell.name === "Haste") {
             let model = ModelArray[spell.targetIDs[0]];
-            sendChat("",model.name + " misses its next turn due to Lethargy from Haste ending");
+            if (model) {
+                sendChat("",model.name + " misses its next turn due to Lethargy from Haste ending");
+            }
         }
 
 
