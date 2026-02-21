@@ -3941,7 +3941,17 @@ log(rituals)
                 },
 
             },
+        "Lorgoth": 
+            {
+                type: "Transform",
+                "Two": {
+                    cID: "-Om1CJcyTB4tDy-XLV6Z",
+                    size: 140,
+                    hp: 136,
+                    change: true,
+                },
 
+            },
 
 
         }

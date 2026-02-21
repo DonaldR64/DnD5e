@@ -1163,6 +1163,22 @@
         },
 
 
+        "Thorn Whip": {
+            name: "Thorn Whip",
+            level: 0,
+            spellType: "DirectAttack",
+            range: 30,
+            autoHit: "No",
+            base: '1d6',
+            cLevel: {5: '2d6', 11: '3d6'},
+            damageType: "piercing",
+            note: "Large or smaller creatures pulled 10 feet closer",
+            sound: "Woosh",
+            emote: "A long vine-like whip covered in thorns lashes out",
+            fx: "missile-slime",
+            macro: '!Spell;Thorn Whip;0;%Selected%;%Target%',
+        },
+
         "Thunderous Smite": {
             name: "Thunderous Smite",
             level: 1,
