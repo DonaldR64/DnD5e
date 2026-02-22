@@ -134,6 +134,7 @@ const DnD = (() => {
         "Greater Invisibility":"Invisible::2006516",
         "Tasha's Hideous Laughter": "Prone::2006547",
         "Haste": "Effect_Speed_Haste::1431997",
+        "Reckless": "Effect_Dance::1431931",
     }
 
     const Incapacitated = ["Paralyzed","Stunned","Unconscious","Incapacitated","Sleep","Hold Person"];
@@ -1713,12 +1714,15 @@ log(defender.vulnerabilities)
             weapon = DeepCopy(WeaponInfo[weaponName]);
             weapon.info = extra;
         } else {
+            if (Tag[8]) {
+                Tag[8] = Tag[8].split(",").map((e) => parseInt(e.replace("[","").replace("]","")))
+            }
             weapon = {
                 base1: Tag[4],
                 base2: Tag[5],
                 type: Tag[6],
                 properties: Tag[7],
-                range: Tag[8].split(",").map((e) => parseInt(e.replace("[","").replace("]",""))),
+                range: Tag[8],
                 text: Tag[9],
                 sound: Tag[10],
                 info: Tag[11] || "Non-Magic",
@@ -2112,9 +2116,9 @@ log(weapon)
 
         let ids = Object.keys(ModelArray);
 
-        let positive = ["Invisible","Advantage"];
+        let positive = ["Invisible","Advantage","Reckless"];
         let attNegative = ["Blind","Frightened","Poisoned","Disadvantage","Heat Metal","Blindness"];
-        let defNegative = ["Blind","Disadvantage","Blindness","Slow"];
+        let defNegative = ["Blind","Disadvantage","Blindness","Slow","Reckless"];
 
         let advantage = false;
         let advText = []; 
@@ -2333,7 +2337,12 @@ log(abilityName)
             outputCard.body.push("Grasping roots and vines sprout in a 15-foot radius centered on the blight, withering away after 1 minute. For the duration, that area is difficult terrain for nonplant creatures. In addition, each creature of the blight’s choice in that area when the plants appear must succeed on a DC 12 Strength saving throw or become restrained. A creature can use its action to make a DC 12 Strength check, freeing itself or another entangled creature within reach on a success.");
 
         }
-
+        if (abilityName === "Reckless") {
+            SetupCard(attacker.name,"Reckless",attacker.displayScheme);
+            outputCard.body.push("The Berserker gains advantage on all melee weapon attack rolls during that turn, but attack rolls against it have advantage.")
+            attacker.token.set("status_" + Markers.Advantage,true);
+            attacker.token.set("status_" + Markers.Disadvantage,true);
+        }
 
 
 

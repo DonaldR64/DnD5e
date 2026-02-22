@@ -129,6 +129,12 @@
             type: "Melee",
             sound: "Sword",
         },
+        Greataxe: {
+            base1: '1d12,slashing',
+            properties: "",
+            type: "Melee",
+            sound: "Sword",
+        },
 
 
 

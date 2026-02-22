@@ -134,6 +134,8 @@ const DnD = (() => {
         "Greater Invisibility":"Invisible::2006516",
         "Tasha's Hideous Laughter": "Prone::2006547",
         "Haste": "Effect_Speed_Haste::1431997",
+        "Reckless": "Effect_Dance::1431931",
+
     }
 
     const Incapacitated = ["Paralyzed","Stunned","Unconscious","Incapacitated","Sleep","Hold Person"];
@@ -2110,9 +2112,9 @@ log(weapon)
 
         let ids = Object.keys(ModelArray);
 
-        let positive = ["Invisible","Advantage"];
+        let positive = ["Invisible","Advantage","Reckless"];
         let attNegative = ["Blind","Frightened","Poisoned","Disadvantage","Heat Metal","Blindness"];
-        let defNegative = ["Blind","Disadvantage","Blindness","Slow"];
+        let defNegative = ["Blind","Disadvantage","Blindness","Slow","Reckless"];
 
         let advantage = false;
         let advText = []; 
@@ -2330,7 +2332,11 @@ log(spell)
             outputCard.body.push("Grasping roots and vines sprout in a 15-foot radius centered on the blight, withering away after 1 minute. For the duration, that area is difficult terrain for nonplant creatures. In addition, each creature of the blight’s choice in that area when the plants appear must succeed on a DC 12 Strength saving throw or become restrained. A creature can use its action to make a DC 12 Strength check, freeing itself or another entangled creature within reach on a success.");
 
         }
-
+        if (abilityName === "Reckless") {
+            SetupCard(attacker.name,"Reckless",attacker.displayScheme);
+            outputCard.body.push("The Berserker gains advantage on all melee weapon attack rolls during that turn, but attack rolls against it have advantage.")
+            attacker.token.set("status_" + Markers.Reckless,true);
+        }
 
 
 
