@@ -2112,7 +2112,8 @@ log(weapon)
 
         let ids = Object.keys(ModelArray);
 
-        let positive = ["Invisible","Advantage","Reckless"];
+        let attPositive = ["Reckless"];
+        let positive = ["Invisible","Advantage"];
         let attNegative = ["Blind","Frightened","Poisoned","Disadvantage","Heat Metal","Blindness"];
         let defNegative = ["Blind","Disadvantage","Blindness","Slow","Reckless"];
 
@@ -2165,6 +2166,7 @@ log(weapon)
 
         //check for conditions, spells etc
         let attPos = findCommon(positive,attMarkers);
+        attPos = attPos.concat(findCommon(attPositive,attMarkers));
         let attNeg = findCommon(attNegative,attMarkers);
         attNeg = attNeg.concat(findCommon(Restrained,attMarkers));
 
