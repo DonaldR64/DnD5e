@@ -1103,9 +1103,7 @@ log(pageInfo)
     const RollDamage = (damageInfo,critical = false) => {
         damageInfo = damageInfo.split(",");
         base = damageInfo[0].trim();
-        damageType = damageInfo[1].trim();
-log("Roll Damage")
-log(damageInfo)
+        damageType = damageInfo[1].trim().toLowerCase();
         base = base.split("+");
         let comp = [];
         _.each(base,e => {
@@ -2283,11 +2281,10 @@ log(abilityName)
         if (abilityName === "Dragon's Breath") {
             let spellID = Tag[3];
             let spell = (state.DnD.spellList.find((e) => e.spellID === spellID));
-
-
             ClearSpellTarget(spell);
             spell.displacedTokenID = attID;
             spell.tempSize = 5;
+log(spell)
             let target = SpellTarget(spell);
             toFront(target.token);
             state.DnD.areaSpell = spell;
@@ -3328,11 +3325,12 @@ log(rituals)
             newSpell.castLevel = spell.castLevel;
             newSpell.casterLevel = spell.casterLevel;
             newSpell.dc = spell.dc;
-            newSpell.damageType = spell.damageType;
+            newSpell.damageType = spell.damageType.toLowerCase();
             if (spell.castLevel > 2) {
                 newSpell.base = newSpell.sLevel[spell.castLevel] || 0;
             }
-            newSpell.damage = newSpell.base + "," + spell.damageType;
+            let damage = newSpell.base + "," + spell.damageType;
+            newSpell.damage = [damage];
             newSpell.spellID = stringGen();
 
             let target = ModelArray[spell.targetIDs[0]];
@@ -3514,7 +3512,9 @@ log(rituals)
         }
 
         if (spell.areaEffect && spell.areaEffect.includes("Damage")) {
-
+            if (Array.isArray(spell.damage) === false) {
+                spell.damage = [spell.damage];
+            }
             let rollResults = [];
             _.each(spell.damage,damage => {
                 let results = RollDamage(damage,false);

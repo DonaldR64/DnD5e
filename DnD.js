@@ -3516,6 +3516,7 @@ log(rituals)
 
             let rollResults = [];
             _.each(spell.damage,damage => {
+                if (!damage) {return};
                 let results = RollDamage(damage,false);
                 rollResults.push(results);
                 tip = '[' + results.total + '](#" class="showtip" title="' + results.diceText + ')'
