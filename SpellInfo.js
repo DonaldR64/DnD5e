@@ -41,6 +41,21 @@
             concentration: true,
             duration: 600,
         },
+        "Bind Elements Orb": {
+            name: "Bind Elements Orb",
+            level: 0,
+            range: 60,
+            spellType: "DirectAttack",
+            autoHit: "No",
+            base: '1d6',
+            damageType: "force",
+            emote: '%%Caster%% hurls his mote of energy, it deals an additional 1d6 per level of the spell absorbed',
+            sound: "Plasma",
+        },
+
+
+
+
 
         "Bless": {
             name: "Bless",
@@ -159,7 +174,20 @@
             sound: "Angels",
             macro: "!Spell;Conjure Animals;%Level%;%Selected%",
         },
-
+        "Command": {
+            name: "Command",
+            level: 1,
+            range: 60,
+            duration: 1,
+            concentration: false,
+            when: "endAll",
+            spellType: "Misc",
+            macro: "!Spell;Command;1;%Selected%;%Target%",
+            sound: "Sound",
+            savingThrow: "wisdom",
+            saveText: " and ignores the command",
+            failText: " must follow the Command",
+        },
 
         "Cone of Cold": {
             name: "Cone of Cold",
@@ -307,6 +335,33 @@
             fx: "explode-slime",
         },
 
+        "Entangling Slime": {
+            name: "Entangling Slime",
+            level: 2,
+            range: 60,
+            duration: 600,
+            concentration: false,
+            spellType: "Area",
+            area: 'Square',
+            areaEffect: "Effect",
+            savingThrow: "dexterity",
+            when: "action",
+            actionSave: "strength",
+            conditionImmune: "restrained",
+            saveText: " and remains free to act",
+            failText: " and is restrained by the webs",
+            moveEffect: "map",
+            sound: "Web",
+            macro: '!Spell;Web;2',
+            emote: "A creature restrained by the entangling slime can use its action to make a Strength check against your spell save DC. If it succeeds, it is no longer restrained. The Area remains Difficult Ground and as well as having the effects of the Grease Spell",
+            tempImg: 'https://files.d20.io/images/466161281/XBL47z2Lc4rAKNcT7M4jjA/thumb.png?1764547188',
+            tempSize: 10,
+            fx: "",
+        },
+
+
+
+
 
         "Explosive Blast": {
             //Izek
@@ -433,6 +488,26 @@
             tempSize: 10,
             fx: 'explode-death',
         },
+
+        "Grease": {
+            name: "Grease",
+            level: 1,
+            range: 60,
+            duration: 10,
+            concentration: false,
+            spellType: "Area",
+            area: "Square",
+            areaEffect: "Effect",
+            savingThrow: "dexterity",
+            failText: " falls prone",
+            sound: "FFire",
+            macro: '!Spell;Grease;1',
+            tempImg: "https://files.d20.io/images/478248049/goxA2fZB4dtH7f__khOz7A/thumb.png?1772651380",
+            tempSize: 10,
+            fx: 'explode-magic',
+        },
+
+
 
         "Devouring Flies": {
             //Baba Lysaga
