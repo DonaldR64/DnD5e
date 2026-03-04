@@ -1,5 +1,5 @@
 const DnD = (() => {
-    const version = '2026.1.22';
+    const version = '2026.3.4';
     if (!state.DnD) {state.DnD = {}};
 
     //various constants used in game
@@ -102,7 +102,7 @@ const DnD = (() => {
         "Sacred Weapon": "Torch-Light::2006651",
         "Sanctuary": "Unknown-or-Mystery-2::2006534",
         "Mage Armour": "418-MA-Buff::5818082",
-        "Slow": "Slow::2006498",
+        "Slow": "Effect_Speed_Slow::1431999",
         "Ray of Frost": "Cold::2006476",
         "Shield of Faith": "Shield::2006495",
         "Faerie Fire": "Effect_Faerie_Glow::1431945",
