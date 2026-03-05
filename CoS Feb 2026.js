@@ -3960,7 +3960,17 @@ log(rituals)
                 },
 
             },
+        "Muriel": 
+            {
+                type: "Transform",
+                "Two": {
+                    cID: "-OmvO1DkAhMFLvHskIUK",
+                    size: 70,
+                    hp: 31,
+                    change: true,
+                },
 
+            },
 
         }
 
