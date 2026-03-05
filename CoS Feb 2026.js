@@ -3966,7 +3966,7 @@ log(rituals)
                 "Two": {
                     cID: "-OmvO1DkAhMFLvHskIUK",
                     size: 70,
-                    hp: 31,
+                    hp: 63,
                     change: true,
                 },
 
