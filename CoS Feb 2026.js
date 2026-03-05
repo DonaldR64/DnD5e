@@ -261,7 +261,7 @@ const DnD = (() => {
             dim = Math.round(dim/70);
             this.size = dim;
 
-            let skillNames = ["acrobatics","athletics","animal handling","deception","history","insight","intimidation","investigation","medicine","nature","perception","performance","persuasion","religion","sleight of hand","stealth","survival"];
+            let skillNames = ["acrobatics","athletics","animal handling","arcana","deception","history","insight","intimidation","investigation","medicine","nature","perception","performance","persuasion","religion","sleight of hand","stealth","survival"];
 
             let skills = {};
 
