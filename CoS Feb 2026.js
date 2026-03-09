@@ -4099,17 +4099,6 @@ log(rituals)
         state.DnD.lastMoved = "";
         state.DnD.saveMarkers = {};
 
-
-        //precast spells - drop duration by 1 round
-        _.each(ModelArray,model => {
-            let markers = model.Markers();
-            _.each(markers,marker => {
-                let spell = SpellInfo[marker];
-                if (spell) {
-                    AddSpell(spell,spell.level,model,[model.id],true);
-                }
-            })
-        })
         Combat();
     }
 
