@@ -1400,13 +1400,13 @@ log(defender.vulnerabilities)
         let failReason = "";
         let bonus = model.saveBonus[stat];
         let otherBonus = 0;
-        let saveTotal,saveTip,bonusText, otherBonusText;
+        let saveTotal,saveTip,bonusText;
+        let otherBonusText = "";
 
         let markers = model.Markers();
 
         let incapacitated = (findCommon(markers,Incapacitated).length > 0) ? true:false;
         let restrained = (findCommon(markers,Restrained).length > 0) ? true:false;
-
 
         if ((stat === "strength" || stat === "dexterity") && incapacitated === true) {
             fail = true;
@@ -1415,8 +1415,30 @@ log(defender.vulnerabilities)
 
         if (markers.includes("Bless")) {
             otherBonus = randomInteger(4);
-            otherBonusText = "Including " + otherBonus + " [Bless d4]";
+            otherBonusText += "Including " + otherBonus + " [Bless d4]";
         }
+        if (model.inParty === true) {
+            if (model.name.includes("Wirsten")) {
+                let b = model.statBonus.charisma;
+                otherBonus += b;
+                otherBonusText += " Aura of Protection +" + b;
+            } else {
+                _.each(ModelArray,model2 => {
+                    if (model2.name.includes("Wirsten")) {
+                        let dist = model.Distance(model2);
+                        if (dist < 3) {
+                            let b = model2.statBonus.charisma;
+                            otherBonus += b;
+                            otherBonusText += " Aura of Protection +" + b;        
+                        }
+                    }
+                })
+            }
+        }
+
+
+
+
         bonus += otherBonus;
 
         if (markers.includes("Dodge") && stat === "dexterity") {
