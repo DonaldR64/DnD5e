@@ -1418,13 +1418,13 @@ log(defender.vulnerabilities)
             otherBonusText += "Including " + otherBonus + " [Bless d4]";
         }
         if (model.inParty === true) {
-            if (model.name.includes("Wirsten")) {
+            if (model.name.includes("Wirsten") && markers.includes("Unconscious") === false) {
                 let b = model.statBonus.charisma;
                 otherBonus += b;
                 otherBonusText += " Aura of Protection +" + b;
             } else {
                 _.each(ModelArray,model2 => {
-                    if (model2.name.includes("Wirsten")) {
+                    if (model2.name.includes("Wirsten") && model2.Markers().includes("Unconscious") === false) {
                         let dist = model.Distance(model2);
                         if (dist < 3) {
                             let b = model2.statBonus.charisma;
