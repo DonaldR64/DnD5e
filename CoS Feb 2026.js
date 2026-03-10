@@ -3839,15 +3839,20 @@ log(rituals)
                     cID: "-Ody8dmoHKTxM6niN9LG",
                     size: 70,
                 },
-                "Brown Bear": {
-                    cID: "-Odyv5HzmAOpBiY_xqLO",
+                "Cave Bear": {
+                    cID: "-OnOBMnO5bNmxDH8lE1m",
                     size: 140,
-                    hp: 34,
+                    hp: 42,
                 },
                 "Dire Wolf": {
                     cID: "-OdyaMtaDE-mfvTYRU-r",
                     size: 140,     
                     hp: 37,
+                },
+                "Giant Elk": {
+                    cID: "-OnODvHlHPif6fGHAY3z",
+                    size: 140,     
+                    hp: 42,
                 }
             },
         "Volenta": 
