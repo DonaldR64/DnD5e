@@ -2361,7 +2361,16 @@ log(spell)
             outputCard.body.push("The Berserker gains advantage on all melee weapon attack rolls during that turn, but attack rolls against it have advantage.")
             attacker.token.set("status_" + Markers.Reckless,true);
         }
-
+        if (abilityName === "AlchemistStone") {
+            SetupCard(attacker.name,"Alchemist Stone",attacker.displayScheme);
+            let defID = Tag[3];
+            let defender = ModelArray[defID];
+            let type = Tag[4];
+            outputCard.body.push(defender.name + " gains Resistance to " + type);
+            type = "Protection from " + type;
+            marker = Markers[type];
+            defender.token.set("status_" + marker,true);
+        }
 
 
         PrintCard();
