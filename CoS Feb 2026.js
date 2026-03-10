@@ -2732,23 +2732,38 @@ log(damageResults)
         spell.dc = caster.spellDC;
         spell.inParty = caster.inParty;
 
-        if (spell.cLevel && spell.cLevel[casterLevel]) {
-            spell.base = spell.cLevel[casterLevel] || 0;
+        if (spell.cLevel) {
+            let keys = Object.keys(spell.cLevel);
+            _.each(keys,key => {
+                if (casterLevel >= parseInt(key)) {
+                    spell.base = spell.cLevel[key];
+                }
+            })
         }
         if (level > spell.level && spell.sLevel) {
             spell.base = spell.sLevel[level] || 0;
         }
 
+        if (caster.special.includes("Potent Cantrips") && level === 0) {
+            spell.base += "+" + (caster.spellDC - 11);
+        }
+
+
+
         spell.damage = [spell.base + "," + spell.damageType];
 
         if (spell.base2) {
-            if (spell.cLevel2 && spell.cLevel2[casterLevel]) {
-                spell.base2 = spell.cLevel2[casterLevel] || 0;
+            if (spell.cLevel2) {
+                let keys = Object.keys(spell.cLevel2);
+                _.each(keys,key => {
+                    if (casterLevel >= parseInt(key)) {
+                        spell.base = spell.cLevel2[key];
+                    }
+                })
             }
             if (level > spell.level && spell.sLevel2) {
                 spell.base = spell.sLevel2[level] || 0;
             }
-
             spell.damage.push(spell.base2 + "," + spell.damageType2);
         }
 

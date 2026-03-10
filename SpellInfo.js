@@ -307,7 +307,7 @@
             base: '1d10',
             damageType: "force",
             emote: '%%Caster%% fires a beam of eldritch energy at the target',
-            sound: "Plasma",
+            sound: "Beam",
             macro: '!Spell;Eldritch Blast;0;%Selected%;%Target%',
         },
 
