@@ -2534,7 +2534,6 @@ log(damageResults)
 
 
 
-
     const DirectAttackSpell = (spell) => {
         let caster = ModelArray[spell.casterID];
         let targetIDs = spell.targetIDs;
@@ -2681,6 +2680,7 @@ log(damageResults)
         let caster = ModelArray[casterID];
 
         let ritual = false;
+
         if (spellName.includes("Ritual")) {
             spellName = spellName.replace("Ritual","");
             ritual = true;
@@ -2694,6 +2694,18 @@ log(damageResults)
 
         let spell = DeepCopy(SpellInfo[spellName]);
         spell.spell = true;
+
+        if (level === -1) {
+            //items, scrolls
+            spell.exempt = true;
+            level = spell.level;
+log("In Items")
+log(spell)
+log(level)
+        
+        }
+
+
 
         //check spell slots, distance
         if (!spell.exempt && ritual === false && level > 0) {
@@ -3126,16 +3138,7 @@ log(model.spells)
                 let name = cantrip.name;
                 let macro = "!DisplaySpellInfo;" + model.id + ";" + cantrip.name + ";" + cantrip.desckey;
                 if (SpellInfo[name]) {
-                    macro = SpellInfo[name].macro;
-                    macro = macro.replace(/%Selected%/g,"&#64;&#123;selected&#124;token&#95;id&#125;");
-                    macro = macro.replace(/%Target%/g,"&#64;&#123;target&#124;Target1&#124;token&#95;id&#125;");
-                    macro = macro.replace("%Target1%","&#64;&#123;target&#124;Target1&#124;token&#95;id&#125;");
-                    macro = macro.replace("%Target2%","&#64;&#123;target&#124;Target2&#124;token&#95;id&#125;");
-                    macro = macro.replace("%Target3%","&#64;&#123;target&#124;Target3&#124;token&#95;id&#125;");
-
-                    
-
-
+                    macro = MacroReplace(SpellInfo[name].macro);
                 }
                 if (SpellInfo[name] && SpellInfo[name].bonusAction) {
                     name = name + " (BA)";
@@ -3190,11 +3193,8 @@ log("Cumulative Slots: " + cumulativeSS)
                         }                                 
                         macro = SpellInfo[name].macro || macro;
                         macro = macro.replace("%Level%",levelMacro);
-                        macro = macro.replace(/%Selected%/g,"&#64;&#123;selected&#124;token&#95;id&#125;");
-                        macro = macro.replace(/%Target%/g,"&#64;&#123;target&#124;Target1&#124;token&#95;id&#125;");
-                        macro = macro.replace("%Target1%","&#64;&#123;target&#124;Target1&#124;token&#95;id&#125;");
-                        macro = macro.replace("%Target2%","&#64;&#123;target&#124;Target2&#124;token&#95;id&#125;");
-                        macro = macro.replace("%Target3%","&#64;&#123;target&#124;Target3&#124;token&#95;id&#125;");
+                        macro = MacroReplace(macro);
+                
                     }
                     if (SpellInfo[name] && SpellInfo[name].bonusAction) {
                         name = name + " (BA)";
@@ -3319,7 +3319,7 @@ log(rituals)
             }
             if (spell.name === "Aid") {
                 let curHP = parseInt(target.token.get("bar1_value"));
-                bonusHP = (spell.castLevel - 1) * 5
+                bonusHP = (spell.castLevel - 1) * 5 || 5;
                 target.token.set("bar1_value",curHP + bonusHP);
                 outputCard.body.push(target.name + " receives " + bonusHP + " hp from Aid");
             }
@@ -3715,6 +3715,7 @@ log(rituals)
         let model = ModelArray[id];
         let Tag = msg.content.split(";");
         let itemName = Tag[1];
+        let buttons = [];
 
         SetupCard(model.name,itemName,model.displayScheme);
 
@@ -3735,13 +3736,34 @@ log(rituals)
             outputCard.body.push("[B]" + tip + "[/b]" + " HP are restored")
         }
 
-
+        if (itemName === "Twilight Crest") {
+            macro = MacroReplace(SpellInfo["Aid"].macro);
+            macro = macro.replace("%Level%","-1");
+            ButtonInfo("Aid",macro);
+            macro = MacroReplace(SpellInfo["Spirit Guardians"].macro);
+            macro = macro.replace("%Level%","-1");
+            ButtonInfo("Spirit Guardians",macro);
+            macro = MacroReplace(SpellInfo["Enervation"].macro);
+            macro = macro.replace(";5;",";-1;");
+            ButtonInfo("Enervation",macro);
+        }
 
 
 
 
             PrintCard();
     }
+
+    const MacroReplace = (macro) => {
+        macro = macro.replace(/%Selected%/g,"&#64;&#123;selected&#124;token&#95;id&#125;");
+        macro = macro.replace(/%Target%/g,"&#64;&#123;target&#124;Target1&#124;token&#95;id&#125;");
+        macro = macro.replace("%Target1%","&#64;&#123;target&#124;Target1&#124;token&#95;id&#125;");
+        macro = macro.replace("%Target2%","&#64;&#123;target&#124;Target2&#124;token&#95;id&#125;");
+        macro = macro.replace("%Target3%","&#64;&#123;target&#124;Target3&#124;token&#95;id&#125;");
+        return macro;
+    }
+
+
 
 
     const Compress = (msg) => {
@@ -4721,6 +4743,9 @@ log("Is Spell: " + model.isSpell)
                 break;
             case '!Summon2':
                 Summon2(msg);
+                break;
+            case '!Item':
+                Item(msg);
                 break;
         }
     };

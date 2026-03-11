@@ -298,7 +298,7 @@
         },
 
         "Eldritch Blast": {
-            //need to modify the macro at level 5 to have 2 targets
+            //macro has to have # of targets based on characters level
             name: "Eldritch Blast",
             level: 0,
             range: 120,
@@ -311,6 +311,22 @@
             macro: '!Spell;Eldritch Blast;0;%Selected%;%Target%',
         },
 
+        "Enervation": {
+            name: "Enervation",
+            level: 5,
+            range: 60,
+            autoHit: "Yes",
+            spellType: "DirectAttack",
+            autoHit: "Yes",
+            base: '4d8',
+            savingThrow: "dexterity",
+            saveEffect: "Half Damage",
+            damageType: "necrotic",
+            emote: 'A tendril of inky darkness reaches out to the target.',
+            sound: "Plasma",
+            macro: '!Spell;Enervation;5;%Selected%;%Target%',
+            note: "The caster regains 1/2 the damage done in HP. If the target fails it save, the spell can continue, the target taking 4d8 necrotic damage each turn if you use your action to continue the spell."
+        },
 
         "Entangle": {
             name: "Entangle",
