@@ -1805,6 +1805,11 @@ log(weapon)
             weapon.base1 = "1d8,bludgeoning";
         }
 
+        if (attMarkers.includes("Zephyr Strike")) {
+            weapon.base2 = "1d8,force";
+            attacker.token.set("status_" + Markers["Advantage"],true);
+        }
+
         if (weaponName === "Spiritual Weapon") {
             strWeapon = false;
             let spellID = attacker.token.get("gmnotes").toString();
@@ -1818,6 +1823,10 @@ log(weapon)
             weapon.magic = "magic";
             weapon.base1 = spell.damage;
         }
+
+
+
+
 
         if (distance > weapon.range[1] && weapon.type.includes("Ranged")) {
             errorMsg.push("Target is Out of Max Range");
@@ -2108,6 +2117,10 @@ log(weapon)
 
         defender.token.set("status_" + Markers["Guiding Bolt"],false);
 
+        if (attMarkers.includes("Zephyr Strike")) {
+            attacker.token.set("status_" + Markers["Advantage"],false);
+            attacker.token.set("status_" + Markers["Zephyr Strike"],false);
+        }
 
 
 
