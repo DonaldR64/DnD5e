@@ -135,7 +135,7 @@ const DnD = (() => {
         "Tasha's Hideous Laughter": "Prone::2006547",
         "Haste": "Effect_Speed_Haste::1431997",
         "Reckless": "Effect_Dance::1431931",
-
+        "Zephyr Strike": "Effect_Air::1431910",
     }
 
     const Incapacitated = ["Paralyzed","Stunned","Unconscious","Incapacitated","Sleep","Hold Person"];

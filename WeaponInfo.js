@@ -135,7 +135,17 @@
             type: "Melee",
             sound: "Sword",
         },
-
-
+        Rapier: {
+            base1: '1d8,piercing',
+            properties: "Finesse",
+            type: "Melee",
+            sound: "Sword",
+        },
+        Handaxe: {
+            base1: '1d6,slashing',
+            properties: "Thrown",
+            type: "Melee,Ranged",
+            sound: "Sword",
+        },
 
     }

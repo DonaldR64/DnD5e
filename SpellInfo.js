@@ -1,5 +1,5 @@
 
-    //Jan 22
+    //Mar 24
     const SpellInfo = {
         "Aid": {
             name: "Aid",
@@ -1347,6 +1347,19 @@
             spellType: "Misc",
             emote: "The next hit deals extra Psychic Damage and may cause the target to Flee",
             macro: "!Spell;Wrathful Smite;1;",
+            sound: "Angels",
+        },
+        "Zephyr Strike": {
+            name: "Zephyr Strike",
+            level: 1,
+            bonusAction: true,
+            range: 5,
+            beneficial: true,
+            duration: 10,
+            concentration: true,
+            spellType: "Misc",
+            emote: "You move like the wind. For the duration, your movement doesn’t provoke opportunity attacks. Once before the spell ends, you can give yourself advantage on one weapon attack roll on your turn. That attack deals an extra 1d8 force damage on a hit. Whether you hit or miss, your walking speed increases by 30 feet until the end of that turn.",
+            macro: "!Spell;Zephyr Strike;1;",
             sound: "Angels",
         },
 
