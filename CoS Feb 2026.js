@@ -4057,6 +4057,20 @@ log(rituals)
                 },
 
             },
+        "Kiril": 
+            {
+                type: "Transform",
+                "Two": {
+                    cID: "-OokyTYTzot-n5Y9NkIr",
+                    size: 210,
+                    hp: 273,
+                    change: true,
+                },
+
+            },
+
+
+
 
         }
 
