@@ -3781,7 +3781,7 @@ log(rituals)
         if (itemName === "Holy Symbol of Ravenkind") {
             outputCard.body.push("As a reaction, when a creature you can see within 30 feet of you would be reduced to 0 hit points, you can expend 2 charges to cause that creature to drop to 1 hit point instead. That creature gains immunity to all damage until the start of its next turn.");
             info = {
-                action: "!UseItem;Dawn's Grace",
+                action: "!EmoteAbility;Dawn's Grace;The selected character is affected by Dawn's Grace (GM)",
                 phrase: "Dawn's Grace",
             }
             outputCard.inline.push(info);
@@ -3790,7 +3790,7 @@ log(rituals)
 
             outputCard.body.push("As an action, you can expend 1 charge and choose one creature you can see within 30 feet of you. All of the following conditions on that creature end: blinded, charmed, deafened, frightened, paralyzed, poisoned, and stunned.");
             info = {
-                action: "!UseItem;Light of Hope",
+                action: "!EmoteAbility;Light of Hope;The selected character is affected by Light of Hope (GM)",
                 phrase: "Light of Hope",
             }
             outputCard.inline.push(info);
@@ -3806,7 +3806,14 @@ log(rituals)
             outputCard.body.push("[INLINE]")
             outputCard.body.push("[hr]");
         }
-
+        if (itemName === "Sun's Blessing") {
+            model.token.set({
+                aura2_radius: 30,
+                aura2_color: "#cfe2f3",
+                showplayers_aura1: true,
+            })
+            outputCard.body.push("All friendly character's within this Aura may add 1d4 radiant damage with their weapons");
+        }
 
 
 
