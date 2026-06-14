@@ -1,5 +1,5 @@
 const DnD = (() => {
-    const version = '2026.3.4';
+    const version = '2026.6.14';
     if (!state.DnD) {state.DnD = {}};
 
     //various constants used in game
@@ -819,9 +819,27 @@ log(model.name + ": " + id)
 //log(i)
 //log(line)
             if (!line || line === "") {continue};
-            if (line.includes("[FORMATTED]")) {
-                line = line.replace("[FORMATTED]","");
-                out += line;
+            if (line.includes("[INLINE")) {
+                let end = line.indexOf("]");
+                let substring = line.substring(0,end+1);
+                let num = substring.replace(/[^\d]/g,"");
+                if (!num) {num = 1};
+                line = line.replace(substring,"");
+                out += `<div style="display: table-row; background: #FFFFFF;; `;
+                out += `"><div style="display: table-cell; padding: 0px 0px; font-family: Arial; font-style: normal; font-weight: normal; font-size: 14px; `;
+                out += `"><span style="line-height: normal; color: #000000; `;
+                out += `"> <div style='text-align: center; display:block;'>`;
+                out += line + " ";
+
+                for (let q=0;q<num;q++) {
+                    let info = outputCard.inline[inline];
+                    out += `<a style ="background-color: ` + Factions[outputCard.side].backgroundColour + `; padding: 5px;`
+                    out += `color: ` + Factions[outputCard.side].fontColour + `; text-align: center; vertical-align: middle; border-radius: 5px;`;
+                    out += `border-color: ` + Factions[outputCard.side].borderColour + `; font-family: Tahoma; font-size: x-small; `;
+                    out += `"href = "` + info.action + `">` + info.phrase + `</a>`;
+                    inline++;                    
+                }
+                out += `</div></span></div></div>`;
             } else {
                 line = line.replace(/\[hr(.*?)\]/gi, '<hr style="width:95%; align:center; margin:0px 0px 5px 5px; border-top:2px solid $1;">');
                 line = line.replace(/\[\#([A-Fa-f0-9]{3}|[A-Fa-f0-9]{6})\](.*?)\[\/[\#]\]/g, "<span style='color: #$1;'>$2</span>"); // [#xxx] or [#xxxx]...[/#] for color codes. xxx is a 3-digit hex code
@@ -3759,6 +3777,34 @@ log(rituals)
             macro = MacroReplace(SpellInfo["Enervation"].macro);
             macro = macro.replace(";5;",";-1;");
             ButtonInfo("Enervation",macro);
+        }
+        if (itemName === "Holy Symbol of Ravenkind") {
+            outputCard.body.push("As a reaction, when a creature you can see within 30 feet of you would be reduced to 0 hit points, you can expend 2 charges to cause that creature to drop to 1 hit point instead. That creature gains immunity to all damage until the start of its next turn.");
+            info = {
+                action: "!UseItem;Dawn's Grace",
+                phrase: "Dawn's Grace",
+            }
+            outputCard.inline.push(info);
+            outputCard.body.push("[INLINE]")
+            outputCard.body.push("[hr]");
+
+            outputCard.body.push("As an action, you can expend 1 charge and choose one creature you can see within 30 feet of you. All of the following conditions on that creature end: blinded, charmed, deafened, frightened, paralyzed, poisoned, and stunned.");
+            info = {
+                action: "!UseItem;Light of Hope",
+                phrase: "Light of Hope",
+            }
+            outputCard.inline.push(info);
+            outputCard.body.push("[INLINE]")
+            outputCard.body.push("[hr]");
+
+            outputCard.body.push("As an action, you can expend 2 charges to cause holy power to radiate from the symbol in a 30-foot radius for 1 minute. Nonhostile creatures in that radius deal an extra 1d4 radiant damage when they hit with a weapon attack.");
+            info = {
+                action: "!UseItem;Sun's Blessing",
+                phrase: "Sun's Blessing",
+            }
+            outputCard.inline.push(info);
+            outputCard.body.push("[INLINE]")
+            outputCard.body.push("[hr]");
         }
 
 
