@@ -840,6 +840,9 @@ log(model.name + ": " + id)
                     inline++;                    
                 }
                 out += `</div></span></div></div>`;
+            } else if (line.includes("[FORMATTED]")) {
+                line = line.replace("[FORMATTED]","");
+                out += line;
             } else {
                 line = line.replace(/\[hr(.*?)\]/gi, '<hr style="width:95%; align:center; margin:0px 0px 5px 5px; border-top:2px solid $1;">');
                 line = line.replace(/\[\#([A-Fa-f0-9]{3}|[A-Fa-f0-9]{6})\](.*?)\[\/[\#]\]/g, "<span style='color: #$1;'>$2</span>"); // [#xxx] or [#xxxx]...[/#] for color codes. xxx is a 3-digit hex code
