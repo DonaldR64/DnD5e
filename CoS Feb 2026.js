@@ -4227,14 +4227,16 @@ log(rituals)
         Campaign().set("initiativepage",true);
 
         _.each(ModelArray,model => {
-            let item = turnorder.filter(item => item.id === model.id)[0];
-            if (!item) {
+            if (model.token.get("layer") === "objects") {
+                let item = turnorder.filter(item => item.id === model.id)[0];
+                if (!item) {
                 let total = D20(0).roll + model.initBonus + (model.initBonus/10);
                 turnorder.push({
                     _pageid:    model.token.get("_pageid"),
                     id:         model.token.get("id"),
                     pr:         total,
                 })
+            }
             }
         })
         turnorder.sort((a,b) => b.pr - a.pr);
