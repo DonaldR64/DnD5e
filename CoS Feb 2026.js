@@ -4680,6 +4680,13 @@ log("Is Spell: " + model.isSpell)
 
     }
 
+    const Play = (msg) => {
+        let sound = msg.content.split(";")[1];
+        PlaySound(sound);
+    }
+
+
+
 
     const ApplyMarker = (msg) => {
         if (!msg.selected) {
@@ -4831,6 +4838,9 @@ log("Is Spell: " + model.isSpell)
                 break;
             case '!Item':
                 Item(msg);
+                break;
+            case '!Play':
+                Play(msg);
                 break;
         }
     };
