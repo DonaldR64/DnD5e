@@ -4124,6 +4124,17 @@ log(rituals)
                 },
 
             },
+        "Varushka": 
+            {
+                type: "Transform",
+                "Two": {
+                    cID: "-Ov8ZifbkqYY7MT73l-o",
+                    size: 70,
+                    hp: 157,
+                    change: true,
+                },
+
+            },
 
 
 
