@@ -76,6 +76,12 @@
             range: [80,320],
             sound: "Arrow",
         },
+        "Longbow": {
+            base1: "1d8,piercing",
+            type: "Ranged",
+            range: [150,600],
+            sound: "Arrow",
+        },
         'Spear (2H)': {
             base1: "1d8,piercing",
             type: "Melee",
