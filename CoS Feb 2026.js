@@ -335,6 +335,9 @@ const DnD = (() => {
                 this.pronoun = "She ";
             }
 
+            this.armourType = aa.armourType || "None";
+
+
             ModelArray[token.id] = this;
 
         }
@@ -2284,6 +2287,11 @@ log(weapon)
             }
         }
 
+        if (damageInfo.name === "Shocking Grasp" && defender.armourType === "Metal") {
+            advantage = true;
+        }
+
+
 
         finalAdv = 0;
         if (advantage === true && disadvantage === false) {
@@ -4146,7 +4154,17 @@ log(rituals)
                 },
 
             },
+        "Anastrasya": 
+            {
+                type: "Transform",
+                "Two": {
+                    cID: "-OvGyUWqqxuJOu12yrqy",
+                    size: 70,
+                    hp: 82,
+                    change: true,
+                },
 
+            },
 
 
         }

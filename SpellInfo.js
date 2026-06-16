@@ -251,6 +251,25 @@
             macro: "!Spell;Cure Wounds;%Level%;%Selected%",
         },
 
+        "Darkness": {
+            name: "Darkness",
+            level: 2,
+            spellType: "Area",
+            area: "Square",
+            sound: "Woosh",
+            range: 60,
+            duration: 600,
+            concentration: true,
+            emote: 'Darkness fills the area',
+            areaEffect: "Graphic",
+            moveEffect: "map",
+            macro: '!Spell;Darkness;%Level%',
+            tempImg: "https://files.d20.io/images/490867852/AwlCe55FuSV_fGOM9bGR0Q/thumb.png?1781635172",
+            tempSize: '30',
+        },
+
+
+
         "Dispel Magic": {
             name: "Dispel Magic",
             level: 3,
@@ -1133,6 +1152,22 @@
             emote: "%%Caster%% imbues his weapon with the Power of Nature!",            
         },
 
+
+        "Shocking Grasp": {
+            name: "Shocking Grasp",
+            level: 0,
+            range: 5,
+            spellType: "DirectAttack",
+            autoHit: "No",
+            base: '1d8',
+            cLevel: {5: '2d8', 11: '3d8'},
+            damageType: "lightning",
+            savingThrow: "",
+            saveEffect: "",
+            emote: 'Lightning springs to deliver a shock',
+            sound: "Taser",
+            macro: '!Spell;Shocking G;0;%Selected%;%Target%',
+        },
 
 
         "Sleep": {
