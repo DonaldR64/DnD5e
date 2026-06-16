@@ -4135,7 +4135,17 @@ log(rituals)
                 },
 
             },
+        "Ludmilla": 
+            {
+                type: "Transform",
+                "Two": {
+                    cID: "-OvGBwAx-gig5FUJJRgD",
+                    size: 70,
+                    hp: 82,
+                    change: true,
+                },
 
+            },
 
 
 
