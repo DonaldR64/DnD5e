@@ -4285,7 +4285,6 @@ log(rituals)
             _.each(msg.selected,selected => {
                 ids.push(selected._id);
             })
-log(ids)
             _.each(ids,id => {
                 let model = ModelArray[id];
                 if (model) {
