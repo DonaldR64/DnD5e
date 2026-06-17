@@ -4255,7 +4255,7 @@ log(rituals)
 
     }
 
-    const StartCombat = () => {
+    const StartCombat = (msg) => {
         //api macro feeds in here and starts combat
         //add in all NPCs, sort turn order, then go to the combat routine
         if (Campaign().get("turnorder") == "") {
@@ -4265,19 +4265,43 @@ log(rituals)
         }
         Campaign().set("initiativepage",true);
 
-        _.each(ModelArray,model => {
-            if (model.token.get("layer") === "objects") {
-                let item = turnorder.filter(item => item.id === model.id)[0];
-                if (!item) {
-                let total = D20(0).roll + model.initBonus + (model.initBonus/10);
-                turnorder.push({
-                    _pageid:    model.token.get("_pageid"),
-                    id:         model.token.get("id"),
-                    pr:         total,
-                })
-            }
-            }
-        })
+        let context = msg.content.split(";")[1] || "None";
+        if (context === "All") {
+            _.each(ModelArray,model => {
+                if (model.token.get("layer") === "objects") {
+                    let item = turnorder.filter(item => item.id === model.id)[0];
+                    if (!item) {
+                    let total = D20(0).roll + model.initBonus + (model.initBonus/10);
+                    turnorder.push({
+                        _pageid:    model.token.get("_pageid"),
+                        id:         model.token.get("id"),
+                        pr:         total,
+                    })
+                }
+                }
+            })
+        } else if (context === "Selected") {
+            let ids = [];
+            _.each(msg.selected,selected => {
+                ids.push(selected._id);
+            })
+log(ids)
+            _.each(ids,id => {
+                let model = ModelArray[id];
+                if (model) {
+                    let item = turnorder.filter(item => item.id === model.id)[0];
+                    if (!item) {
+                        let total = D20(0).roll + model.initBonus + (model.initBonus/10);
+                        turnorder.push({
+                            _pageid:    model.token.get("_pageid"),
+                            id:         model.token.get("id"),
+                            pr:         total,
+                        })
+                    }
+                }
+            })
+        }
+
         turnorder.sort((a,b) => b.pr - a.pr);
         turnorder.unshift({
             _pageid:    Campaign().get("playerpageid"),
@@ -4849,7 +4873,7 @@ log("Is Spell: " + model.isSpell)
                 WildShape2(msg);
                 break;
             case '!StartCombat':
-                StartCombat();
+                StartCombat(msg);
                 break;
             case '!EndCombat':
                 EndCombat();
