@@ -153,5 +153,9 @@
             type: "Melee,Ranged",
             sound: "Sword",
         },
-
+        'Bone Mace': {
+            base1: "1d6,bludgeoning",
+            type: "Melee",
+            sound: "Staff",
+        },
     }
