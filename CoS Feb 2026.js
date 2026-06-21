@@ -95,6 +95,7 @@ const DnD = (() => {
         "Dodge": "half-haze",
         "Disadvantage": "Minus::2006420",
         "Advantage": "Plus::2006398",
+        "Exhaustion": "Dying-Transparent::2006646", //set # to indicate level
         //spells and abilities
         "Protection from Evil and Good": "Good_Evil::1432039",
         "Bless": "Effect_Blessed::1431919",
@@ -1484,6 +1485,11 @@ log(defender.vulnerabilities)
             }
         }
 
+        if (model.token.get(Markers.Exhaustion) && parseInt(model.token.get(Markers.Exhaustion)) > 2) {
+            disadv = true;
+            disAdvReasons.push("Exhaustion Level 3+");
+        }
+
 
         let finalAdv = 0;
         if (adv === true && disadv === false) {finalAdv = 1};
@@ -1657,6 +1663,11 @@ log(defender.vulnerabilities)
         let skill = text.toLowerCase();
         skill = skill.replace(/ /g,"_");
         SetupCard(model.name,text,model.displayScheme);
+        if (model.token.get(Markers.Exhaustion)) {
+            outputCard.body.push("Exhaustion - Disadvantage applied");
+            advantage = Math.max(-1,advantage - 1);
+        }
+
         let stats = ["strength","dexterity","constitution","intelligence","wisdom","charisma"];
         let bonus;
         if (stats.includes(skill)) {
@@ -2216,6 +2227,13 @@ log(weapon)
                 disadvantage = true;
             }
         }
+
+        //Exhaustion
+        if (attMarkers.includes("Exhaustion") && parseInt(attacker.token.get(Markers.Exhaustion)) > 2) {
+            disText.push("Attacker Exhausted");
+            disadvantage = true;
+        }
+
 
         //ranged weapons over 'normal' range; note that thrown has changed to ranged in attack routine
         if (inReach === false && damageInfo.type === "Ranged" && distance > damageInfo.range[0]) {
