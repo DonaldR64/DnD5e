@@ -140,6 +140,27 @@
             fx: "breath-fire",
         },
 
+
+        "Catapult": {
+            name: "Catapult",
+            level: 1,
+            spellType: "DirectAttack",
+            range: 60,
+            autoHit: "Yes",
+            base: '3d8',
+            damageType: "bludgeoning",
+            savingThrow: "dexterity",
+            saveEffect: "No Damage",
+            sound: "Staff",
+            emote: "The caster picks up a small object and hurls it with speed at the target.",
+            fx: "",
+            macro: '!Spell;Catapult;1;%Selected%;%Target%',
+        },
+
+
+
+
+
         "Call Lightning": {
             name: "Call Lightning",
             level: 3,
@@ -161,6 +182,37 @@
             emote: "",
             fx: 'explode-magic',
         },
+
+        "Chill Touch": {
+            name: "Chill Touch",
+            level: 0,
+            spellType: "DirectAttack",
+            range: 120,
+            autoHit: "No",
+            base: '1d8',
+            cLevel: {5: '2d8', 11: '3d8'},
+            damageType: "necrotic",
+            sound: "Laser",
+            emote: "A ghostly skeletal hand tries to attach to the target. If hit, it can’t regain hit points until the start of your next turn. Until then, the hand clings to the target. If an undead target, it also has disadvantage on attack rolls against the caster until the end of the caster's next turn.",
+            fx: "",
+            macro: '!Spell;Chill Touch;0;%Selected%;%Target%',
+        },
+
+        "Cloud of Daggers": {
+            name: "Cloud of Daggers",
+            level: 2,
+            range: 60,
+            duration: 10,
+            concentration: true,
+            when: "endAll",
+            spellType: "Misc",
+            macro: "!Spell;Cloud of Daggers;2;%Selected%;%Target%",
+            emote: "The air is filled with spinning daggers in a cube 5 feet on each side, centered on a point within range. A creature takes <<4d4,slashing>> damage when it enters the spell’s area for the first time on a turn or starts its turn there."
+        },
+
+
+
+
 
          "Conjure Animals": {
             name: "Conjure Animals",
@@ -776,6 +828,22 @@
             emote: "The Target can make a Wisdom Save at the end of each of its turns.",
         },
 
+
+        "Ice Knife": {
+            name: "Ice Knife",
+            level: 1,
+            spellType: "DirectAttack",
+            range: 60,
+            autoHit: "No",
+            base: '1d10',
+            damageType: "piercing",
+            sound: "Laser",
+            emote: "A shard of ice flys at the target. Hit or miss it then explodes, the target and each creature within 5 feet of it must succeed on a Dexterity saving throw or take <<2d6,cold>> damage.",
+            fx: "",
+            macro: '!Spell;Ice Knife;1;%Selected%;%Target%',
+        },
+
+
         "Ice Storm": {
             level: 4,
             name: "Ice Storm",
@@ -798,6 +866,23 @@
             emote: "A hail of rock-hard ice pounds to the ground in a 20-foot-radius, 40-foot-high cylinder centered on a point within range. Hailstones turn the storm’s area of effect into difficult terrain until the end of your next turn.", 
             charID: '-OiE7OCHSibssu2PskVE',
         },
+
+        "Infestation": {
+            name: "Infestation",
+            level: 0,
+            range: 30,
+            duration: 1,
+            concentration: false,
+            when: "",
+            spellType: "Misc",
+            macro: "!Spell;Infestation;0;%Selected%;%Target%",
+            sound: "Sound",
+            savingThrow: "constitution",
+            saveText: " resists",
+            failText: " takes <<1d6,poison>> damage and moves 1 sq. in a random direction",
+            emote: " a cloud of fleas or ticks surrounds the target",
+        },
+
 
 
 
@@ -878,7 +963,7 @@
             onMiss: true,
             onMissEmote: "%%Target%% is still sprayed with acid, taking <<2d4,acid>> damage",
             fx: "rocket-slime",
-            macro: '!Spell;Melfs Acid Arrow;%Level%;%Selected%;%Target%',
+            macro: "!Spell;Melf's Acid Arrow;%Level%;%Selected%;%Target%",
         },
 
 
@@ -1365,7 +1450,20 @@
         },
 
 
-
+        "Witch Bolt": {
+            name: "Witch Bolt",
+            level: 1,
+            spellType: "DirectAttack",
+            range: 30,
+            autoHit: "No",
+            base: '1d12',
+            sLevel: [0,'1d12',"2d12","3d12","4d12","5d12","6d12"],    
+            damageType: "lightning",
+            sound: "Thunder",
+            emote: "A beam of crackling, blue energy lances out toward a creature within range, forming a sustained arc of lightning between caster and target on a hit. If hit, on each of the caster's turns for the duration, it can use its action to deal the base lightning damage to the target automatically. The spell ends if it uses its action to do anything else. The spell also ends if the target is ever outside the spell’s range or if it has total cover from the caster.",
+            fx: "missile-magic",
+            macro: '!Spell;Witch Bolt;%Level%;%Selected%;%Target%',
+        },
 
 
 
