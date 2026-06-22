@@ -95,7 +95,7 @@ const DnD = (() => {
         "Dodge": "half-haze",
         "Disadvantage": "Minus::2006420",
         "Advantage": "Plus::2006398",
-        "Exhaustion": "Dying-Transparent::2006646", //set # to indicate level
+        "Exhaustion": "Dying-Transparent_::2006646", //set # to indicate level
         //spells and abilities
         "Protection from Evil and Good": "Good_Evil::1432039",
         "Bless": "Effect_Blessed::1431919",
@@ -455,10 +455,17 @@ const DnD = (() => {
         Markers() {
             let statusmarkers = this.token.get("statusmarkers");
             statusmarkers = statusmarkers.split(",");
+log(statusmarkers)
             let markers = [];
             _.each(statusmarkers,marker => {
+                marker = marker.split("@");
+                let level = marker[1];
+                marker = marker[0];
                 let m = getKeyByValue(Markers,marker);
                 if (m) {
+                    if (level) {
+                        m = m + " " + level;
+                    }
                     markers.push(m);
                 }
             })
@@ -1378,13 +1385,21 @@ log(defender.vulnerabilities)
         if (!marker) {
             return;
         }
-        if (status === "On") {
-            model.token.set("status_" + marker,true);
-        } else if (status === "Off") {
-            model.token.set("status_" + marker,false);
-        } else if (status === "Clear") {
-            model.token.set("statusmarkers","");
+
+        if (isNaN(status)) {
+            if (status === "On") {
+                model.token.set("status_" + marker,true);
+            } else if (status === "Off") {
+                model.token.set("status_" + marker,false);
+            } else if (status === "Clear") {
+                model.token.set("statusmarkers","");
+            } 
+        } else {
+            model.token.set("status_" + marker,parseInt(status))
         }
+
+
+
         
     }
 
@@ -1408,8 +1423,6 @@ log(defender.vulnerabilities)
         let char = getObj("character", token.get("represents"));    
         let markers = model.Markers();
         outputCard.body.push(markers.toString());
-
-
         PrintCard();
 
     }
@@ -1485,9 +1498,14 @@ log(defender.vulnerabilities)
             }
         }
 
-        if (model.token.get(Markers.Exhaustion) && parseInt(model.token.get(Markers.Exhaustion)) > 2) {
-            disadv = true;
-            disAdvReasons.push("Exhaustion Level 3+");
+log(markers)
+        let exh = markers.find((e) => e.includes("Exhaustion"));
+        if (exh) {
+            let level = parseInt(exh.replace(/[^\d]/g,""));
+            if (level > 2) {
+                disadv = true;
+                disAdvReasons.push("Exhaustion Level 3+");
+            }
         }
 
 
@@ -1663,7 +1681,7 @@ log(defender.vulnerabilities)
         let skill = text.toLowerCase();
         skill = skill.replace(/ /g,"_");
         SetupCard(model.name,text,model.displayScheme);
-        if (model.token.get(Markers.Exhaustion)) {
+        if (model.Markers.find((e) => e.includes("Exhaustion"))) {
             outputCard.body.push("Exhaustion - Disadvantage applied");
             advantage = Math.max(-1,advantage - 1);
         }
@@ -2229,11 +2247,14 @@ log(weapon)
         }
 
         //Exhaustion
-        if (attMarkers.includes("Exhaustion") && parseInt(attacker.token.get(Markers.Exhaustion)) > 2) {
-            disText.push("Attacker Exhausted");
-            disadvantage = true;
+        let exh = attMarkers.find((e) => e.includes("Exhaustion"));
+        if (exh) {
+            let level = parseInt(exh.replace(/[^\d]/g,""));
+            if (level > 2) {
+                disadvantage = true;
+                disText.push("Exhaustion Level 3+");
+            }
         }
-
 
         //ranged weapons over 'normal' range; note that thrown has changed to ranged in attack routine
         if (inReach === false && damageInfo.type === "Ranged" && distance > damageInfo.range[0]) {
