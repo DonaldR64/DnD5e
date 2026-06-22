@@ -1678,6 +1678,8 @@ log(markers)
         let Tag = msg.content.split(";");
         let advantage = (Tag[1] === "Advantage") ? 1: (Tag[1] === "Disadvantage") ? -1:0;
         let text = Tag[2];
+        let extra = Tag[3] || "0";
+        let extraBonus = parseInt(extra.replace(/[^\d]/g,""));
         let skill = text.toLowerCase();
         skill = skill.replace(/ /g,"_");
         SetupCard(model.name,text,model.displayScheme);
@@ -1693,8 +1695,14 @@ log(markers)
         } else {
             bonus = model.skills[skill];
         }
+
+        bonus += extraBonus;
+
         let result = D20(advantage);
         OutputRoll(result,bonus);
+        if (extraBonus !== 0) {
+            outputCard.body.push(extra);
+        }
         PlaySound("Dice")
         PrintCard();
     }
