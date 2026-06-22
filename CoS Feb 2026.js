@@ -1681,7 +1681,7 @@ log(markers)
         let skill = text.toLowerCase();
         skill = skill.replace(/ /g,"_");
         SetupCard(model.name,text,model.displayScheme);
-        if (model.Markers.find((e) => e.includes("Exhaustion"))) {
+        if (model.Markers().find((e) => e.includes("Exhaustion"))) {
             outputCard.body.push("Exhaustion - Disadvantage applied");
             advantage = Math.max(-1,advantage - 1);
         }
