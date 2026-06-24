@@ -24,6 +24,15 @@ const DnD = (() => {
         "-OeTGX5FY4C70LTFBna4": "",
     }
 
+    let SummonedAllies = {
+        "Ratatoskr": "Eivirin",
+        "Pror'ci Omuch": "Eivirin",
+
+    }
+
+
+
+
     const playerColours = {
         "-OdzmtPMDNNfcmdvIN5m": "#ffd700",
         "-OdyHPJkwRBH1F9Zn5AU": "#228C22",
@@ -1746,6 +1755,43 @@ log(markers)
         }
         return result;
     }
+
+    const Search = (msg) => {
+        let id;
+        if (!msg.selected) {
+            if (msg.playerid) {
+                id = PCs[msg.playerid];
+            } else {
+                sendChat("","Select a Token");
+                return;
+            }
+        } else {
+            id = msg.selected[0]._id;
+        }
+        let model = ModelArray[id];
+        if (!model) {return};
+        let advantage = 0;
+        SetupCard(model.name,"Search",model.displayScheme);
+        if (model.Markers().find((e) => e.includes("Exhaustion"))) {
+            outputCard.body.push("Exhaustion - Disadvantage applied");
+            advantage = Math.max(-1,advantage - 1);
+        }
+        let s1 = model.skills["perception"];
+        let s2 = model.skills["investigation"];
+        let bonus = s1, skill = "Perception";
+        if (s2 > s1) {
+            bonus = s2, skill = "Investigation";
+        }
+        outputCard.body.push("Using " + skill);
+        let result = D20(advantage);
+        OutputRoll(result,bonus);
+        PlaySound("Dice")
+        PrintCard();
+    }
+
+
+
+
     
     let OutputRoll = (result,bonus) => {
         //used to output Save Roll, Check Roll, Initiative Roll etc
@@ -4319,6 +4365,11 @@ log(rituals)
                     let item = turnorder.filter(item => item.id === model.id)[0];
                     if (!item) {
                     let total = D20(0).roll + model.initBonus + (model.initBonus/10);
+                    if (SummonedAllies[model.name]) {
+                        let mastersID = Object.keys(ModelArray).find((e) => ModelArray[e].name === SummonedAllies[model.name])
+                        let masterItem = turnorder.filter(item => item.id === mastersID)[0];
+                        total = masterItem.pr;
+                    }
                     turnorder.push({
                         _pageid:    model.token.get("_pageid"),
                         id:         model.token.get("id"),
@@ -4336,8 +4387,16 @@ log(rituals)
                 let model = ModelArray[id];
                 if (model) {
                     let item = turnorder.filter(item => item.id === model.id)[0];
+                    
                     if (!item) {
                         let total = D20(0).roll + model.initBonus + (model.initBonus/10);
+                        if (SummonedAllies[model.name]) {
+                            let mastersID = Object.keys(ModelArray).find((e) => ModelArray[e].name === SummonedAllies[model.name])
+                            let masterItem = turnorder.filter(item => item.id === mastersID)[0];
+                            total = masterItem.pr;
+                        }
+
+
                         turnorder.push({
                             _pageid:    model.token.get("_pageid"),
                             id:         model.token.get("id"),
@@ -4951,6 +5010,11 @@ log("Is Spell: " + model.isSpell)
             case '!Play':
                 Play(msg);
                 break;
+            case '!Search':
+                Search(msg);
+                break;
+
+
         }
     };
 
