@@ -27,10 +27,11 @@ const DnD = (() => {
     let SummonedAllies = {
         "Ratatoskr": "Eivirin",
         "Pror'ci Omuch": "Eivirin",
-        
+        "Giant Spider (Haevan's)": "Haevan",
+
     }
 
-    
+
 
 
 
@@ -116,6 +117,7 @@ const DnD = (() => {
         "Slow": "Effect_Speed_Slow::1431999",
         "Ray of Frost": "Cold::2006476",
         "Shield of Faith": "Shield::2006495",
+        "Stoneskin": "Effect_Earth::1431941",
         "Faerie Fire": "Effect_Faerie_Glow::1431945",
         "Web": "Effect_Web_Spider_Climb::1432012",
         "Entangle": "Effect_Entangled_Vine_Grow::1431943",
@@ -1144,7 +1146,7 @@ log(pageInfo)
         nameArray = {};
     }
 
-    const RollDamage = (damageInfo,critical = false) => {
+    const RollDamage = (damageInfo,critical = false,max = false) => {
         damageInfo = damageInfo.split(",");
         base = damageInfo[0].trim();
         damageType = damageInfo[1].trim().toLowerCase();
@@ -1186,6 +1188,9 @@ log(pageInfo)
                 text.push(dice + "d" + info.type);
                 for (let d=0;d<dice;d++) {
                     let roll = randomInteger(info.type);
+                    if (max === true) {
+                        roll = info.type;
+                    }
                     rolls.push(roll);
                     total += roll;
                 }
@@ -1237,7 +1242,9 @@ log(defender.vulnerabilities)
                 extraResistances.push(type.toLowerCase());
             }
         })
-
+        if (defenderMarkers.includes("Stoneskin")) {
+            defender.resistances += "bludgeoning, piercing, and slashing from nonmagical attacks";
+        }
 
         //Immunities
         if (defender.immunities.includes(damageType)) {
@@ -1259,6 +1266,14 @@ log(defender.vulnerabilities)
                 saveTip = "Immune to " + Capit(damageType) + " Damage";
             }
         }
+        if (damageInfo.name === "Blight" && (defender.type.includes("undead") || defender.type.includes("construct"))) {
+            immune = true;
+            saveTip = "Immune to Blight";
+        }
+
+
+
+
         //Resistances
         if (immune === false && (defender.resistances.includes(damageType) || extraResistances.includes(damageType))) {
             if (weaponTypes.includes(damageType)) {
@@ -1294,6 +1309,10 @@ log(defender.vulnerabilities)
             irv = " [#ff0000][Vulnerable][/#]";
         }
 
+
+
+
+
         //other Damage Reduction Here
 
 
@@ -1302,9 +1321,17 @@ log(defender.vulnerabilities)
         let disadv = false;
         if (damageInfo.name === "Moonbeam" && defender.type.includes("shapechanger")) {
             disadv = true;
-            saveTip = "Disadvantage to Save from Moonbeam";
+            saveTip = "Disadvantage to Save vs Moonbeam";
             irv = " [#ff0000][Disadvantage][/#]";
         }
+        if (damageInfo.name === "Blight" && defender.type.includes("plant")) {
+            disadv = true;
+            saveTip = "Disadvantage to Save vs Blight";
+            irv = " [#ff0000][Disadvantage][/#]";
+        }
+
+
+
 
         if (damageInfo.spell === true && defender.resistances.includes("magic resistance") && damageInfo.savingThrow) {
             adv = true;
@@ -2751,8 +2778,11 @@ log(damageResults)
             if ((attackTotal >= ac && attackResult.roll !== 1) || crit === true || spell.autoHit === "Yes") {
                 outputCard.body.push("[B]" + defender.name +" is Hit![/b]")
                 for (let i=0;i<spell.damage.length;i++) {
-
-                    let rollResults = RollDamage(spell.damage[i],crit); //total, diceText
+                    let max = false;
+                    if (spell.name === "Blight" && defender.type.includes("plant")) {
+                        max = true;
+                    }
+                    let rollResults = RollDamage(spell.damage[i],crit,max); //total, diceText
                     let damageResults = ApplyDamage(rollResults,dc,defender,spell);
                     let tip = rollResults.diceText;      
                     tip = '[' + damageResults.total + '](#" class="showtip" title="' + tip + ')';

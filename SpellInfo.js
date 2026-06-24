@@ -70,6 +70,24 @@
             duration: 10,
         },
 
+        "Blight": {
+            name: "Blight",
+            level: 4,
+            sLevel: [0,0,0,0,"8d8","9d8","10d8"],
+            range: 30,
+            base: "8d8",
+            spellType: "DirectAttack",
+            autoHit: "Yes",
+            savingThrow: "constitution",
+            saveEffect: "Half Damage",
+            damageType: "necrotic",
+            emote: "Necromantic Energy Washes over the target",
+            macro: "!Spell;Blight;%Level%;%Selected%;%Target%",
+            sound: "Woosh",
+        },
+
+
+
         "Blindness": {
             name: "Blindness",
             level: 2,
@@ -226,6 +244,47 @@
             sound: "Angels",
             macro: "!Spell;Conjure Animals;%Level%;%Selected%",
         },
+
+         "Conjure Minor Elementals": {
+            name: "Conjure Minor Elementals",
+            beneficial: true,
+            concentration: true,
+            duration: 600,
+            level: 4,
+            range: 90,
+            spellType: "Misc",
+            emote: "You summon elementals that appear in unoccupied spaces that you can see within range in unoccupied spaces within 90ft. Options: 1 CR2 Elemental or 2 CR1 Elementals or 4 CR 1/2 Elementals or 8 CR 1/4 Elementals. They are friendly and obey verbal commands. They roll initiative as a group",
+            sound: "Angels",
+            macro: "!Spell;Conjure Minor Elementals;%Level%;%Selected%",
+        },
+
+
+         "Conjure Woodland Beings": {
+            name: "Conjure Woodland Beings",
+            beneficial: true,
+            concentration: true,
+            duration: 600,
+            level: 4,
+            range: 60,
+            spellType: "Misc",
+            emote: "You summon fey creatures that appear in unoccupied spaces that you can see within range in unoccupied spaces within 60ft. Options: 1 CR2 Fey or 2 CR1 Fey or 4 CR 1/2 Fey or 8 CR 1/4 Fey. They are friendly and obey verbal commands. They roll initiative as a group",
+            sound: "Angels",
+            macro: "!Spell;Conjure Woodland Beings;%Level%;%Selected%",
+        },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         "Command": {
             name: "Command",
             level: 1,
@@ -260,6 +319,29 @@
             macro: '!Spell;Cone of Cold;%Level%',
             fx: "breath-frost",
         },
+
+        "Confusion": {
+            name: "Confusion",
+            level: 4,
+            range: 90,
+            duration: 10,
+            concentration: true,
+            spellType: "Area",
+            area: 'Square',
+            areaEffect: "Effect",
+            savingThrow: "wisdom",
+            when: "action",
+            conditionImmune: "confusion",
+            saveText: " and remains free to act",
+            failText: " and is confused",
+            sound: "Entangle",
+            macro: '!Spell;Confusion;4',
+            emote: "An affected target can't take reactions and must roll a d10 at the start of each of its turns to determine its behavior for that turn.",
+            tempImg: "https://files.d20.io/images/464592488/Ol6oEZ2kLqqfV-fEBHrq5Q/thumb.png",
+            tempSize: 20,
+            fx: "explode-magic",
+        },
+
 
         "Counterspell": {
             name: "Counterspell",
@@ -555,6 +637,39 @@
             fx: 'burn-fire',
             emote: "%%Caster%% evokes a Fiery Blade as a Bonus Action",            
         },
+
+         "Giant Insect": {
+            name: "Giant Insect",
+            beneficial: true,
+            concentration: true,
+            bonusAction: true,
+            duration: 600,
+            level: 4,
+            range: 30,
+            spellType: "Misc",
+            emote: "You transform insects into their giant forms. Each creature obeys your verbal commands, and in combat, they act on your turn each round.",
+            sound: "Angels",
+            macro: "!Spell;Giant Insect;4;%Selected%",
+        },
+
+         "Grasping Vine": {
+            name: "Grasping Vine",
+            beneficial: true,
+            concentration: true,
+            duration: 10,
+            level: 4,
+            range: 30,
+            spellType: "Misc",
+            emote: "You conjure a vine that sprouts from the ground in an unoccupied space of your choice that you can see within range. When you cast this spell, you can direct the vine to lash out at a creature within 30 feet of it that you can see. That creature must succeed on a Dexterity saving throw or be pulled 20 feet directly toward the vine. Until the spell ends, you can direct the vine to lash out at the same creature or another one as a bonus action on each of your turns.",
+            sound: "Angels",
+            macro: "!Spell;Grasping Vine;4;%Selected%",
+        },
+
+
+
+
+
+
 
         "Gravepyre": {
             //Vladimir
@@ -1355,6 +1470,22 @@
             emote: "A Weapon of pure Force appears and can be moved to attack any target within range (60 feet)",
             charID: '-OhvKvkbLTJaap8L0gQl',
         },
+
+
+        "Stoneskin": {
+            name: "Stoneskin",
+            level: 4,
+            range: 5,
+            beneficial: true,
+            duration: 600,
+            concentration: true,
+            spellType: "Misc",
+            emote: "This spell turns the flesh of a willing creature you touch as hard as stone. Until the spell ends, the target has resistance to nonmagical bludgeoning, piercing, and slashing damage.",
+            macro: "!Spell;Stoneskin;4;%Selected%;%Target%",
+            sound: "Angels",
+        },
+
+
 
 
         "Tasha's Hideous Laughter": {
