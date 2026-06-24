@@ -27,9 +27,10 @@ const DnD = (() => {
     let SummonedAllies = {
         "Ratatoskr": "Eivirin",
         "Pror'ci Omuch": "Eivirin",
-
+        
     }
 
+    
 
 
 
