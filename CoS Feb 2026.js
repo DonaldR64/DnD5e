@@ -1229,21 +1229,21 @@ log(damageInfo)
         let irv = "";
         let saveTip = "";
 
+        let resistances = DeepCopy(defender.resistances);
+
         let weaponTypes = ["piercing","slashing","bludgeoning"]
-log(defender.immunities)
-log(defender.resistances)
-log(defender.vulnerabilities)
 
         let extraResistances = [];
         let resistanceTypes = ["Fire","Cold","Lightning","Thunder","Acid"];
         let defenderMarkers = defender.Markers();
         _.each(resistanceTypes,type => {
             if (defenderMarkers.includes("Protection from " + type)) {
-                extraResistances.push(type.toLowerCase());
+                resistances += "," + type.toLowerCase();
+                //extraResistances.push(type.toLowerCase());
             }
         })
         if (defenderMarkers.includes("Stoneskin")) {
-            defender.resistances += "bludgeoning, piercing, and slashing from nonmagical attacks";
+            resistances += "bludgeoning, piercing, and slashing from nonmagical attacks";
         }
 
         //Immunities
@@ -1275,17 +1275,17 @@ log(defender.vulnerabilities)
 
 
         //Resistances
-        if (immune === false && (defender.resistances.includes(damageType) || extraResistances.includes(damageType))) {
+        if (immune === false && resistances.includes(damageType)) {
             if (weaponTypes.includes(damageType)) {
-                if (defender.resistances.includes("nonmagical") && defender.resistances.includes("silver") === false && magic === false) {
+                if (resistances.includes("nonmagical") && resistances.includes("silver") === false && magic === false) {
                     resistant = true;
                     saveTip = "Resistant to " + Capit(damageType) + " Damage from Non-magical Weapons";
                 }
-                if (defender.resistances.includes("silver") && magic === false && silver === false) {
+                if (resistances.includes("silver") && magic === false && silver === false) {
                     resistant = true;
                     saveTip = "Resistant to " + Capit(damageType) + " Damage from Non-magical, Non-Silvered Weapons";
                 }
-                if (defender.resistances.includes("nonmagical") === false && defender.resistances.includes("silver") === false) {
+                if (resistances.includes("nonmagical") === false && resistances.includes("silver") === false) {
                     resistant = true;
                     saveTip = "Immune to " + Capit(damageType) + " Damage";
                 }
@@ -1333,7 +1333,7 @@ log(defender.vulnerabilities)
 
 
 
-        if (damageInfo.spell === true && defender.resistances.includes("magic resistance") && damageInfo.savingThrow) {
+        if (damageInfo.spell === true && resistances.includes("magic resistance") && damageInfo.savingThrow) {
             adv = true;
             saveTip += "<br>Advantage to Save from Magic Resistance";
             irv += " [#ff0000][Advantage][/#]";
