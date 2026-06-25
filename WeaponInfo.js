@@ -82,6 +82,14 @@
             range: [150,600],
             sound: "Arrow",
         },
+        "Shortbow": {
+            base1: "1d6,piercing",
+            type: "Ranged",
+            range: [80,320],
+            sound: "Arrow",
+        },
+
+
         'Spear (2H)': {
             base1: "1d8,piercing",
             type: "Melee",
