@@ -34,6 +34,8 @@ const DnD = (() => {
 
 
         "Giant Spider (Haevan's)": "Haevan",
+        "Giant Centipede (Haevan's)": "Haevan",
+        "Giant Wasp (Haevan's)": "Haevan",
 
     }
 
