@@ -26,7 +26,13 @@ const DnD = (() => {
 
     let SummonedAllies = {
         "Ratatoskr": "Eivirin",
-        "Pror'ci Omuch": "Eivirin",
+        "Vulcanus, Spirit of Fire": "Eivirin",
+        "Undine, Spirit of Water": "Eivirin",
+        "Sylvestris, Spirit of Air": "Eivirin",
+        "Gnomus, Spirit of Earth": "Eivirin",
+
+
+
         "Giant Spider (Haevan's)": "Haevan",
 
     }
