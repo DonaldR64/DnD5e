@@ -3893,7 +3893,7 @@ log(rituals)
 
         SetupCard(model.name,itemName,model.displayScheme);
 
-        if (itemName === "Potion of Healing" || itemName === "Potion of  Greater Healing") {
+        if (itemName === "Potion of Healing" || itemName === "Potion of Greater Healing") {
             let total = 0;
             let rolls = [];
             if (itemName === "Potion of Healing") {d = 2} else {d = 4};
