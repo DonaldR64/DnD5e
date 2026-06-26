@@ -4016,6 +4016,7 @@ log(rituals)
     const Compress2 = (id) => {
         let model = ModelArray[id];
         let tokenSize = model.token.get("width");
+
         dis = false;
         if (tokenSize > 70) {
             tokenSize = 70;
