@@ -157,6 +157,9 @@ const DnD = (() => {
         "Haste": "Effect_Speed_Haste::1431997",
         "Reckless": "Effect_Dance::1431931",
         "Zephyr Strike": "Effect_Air::1431910",
+        "Warding Bond": "chained-heart",
+
+
     }
 
     const Incapacitated = ["Paralyzed","Stunned","Unconscious","Incapacitated","Sleep","Hold Person"];
@@ -1484,7 +1487,7 @@ log(damageInfo)
         let bonus = model.saveBonus[stat];
         let otherBonus = 0;
         let saveTotal,saveTip,bonusText;
-        let otherBonusText = "";
+        let otherBonusText = [];
 
         let markers = model.Markers();
 
@@ -1497,14 +1500,21 @@ log(damageInfo)
         }
 
         if (markers.includes("Bless")) {
-            otherBonus = randomInteger(4);
-            otherBonusText += "Including " + otherBonus + " [Bless d4]";
+            otherBonus += randomInteger(4);
+            otherBonusText.push("Bless +" + otherBonus);
         }
+        if (markers.includes("Warding Bond")) {
+            otherBonus += 1;
+            otherBonusText.push("Warding Bond +1");
+        }
+
+
+
         if (model.inParty === true) {
             if (model.name.includes("Wirsten") && markers.includes("Unconscious") === false) {
                 let b = model.statBonus.charisma;
                 otherBonus += b;
-                otherBonusText += " Aura of Protection +" + b;
+                otherBonusText.push("Aura of Protection +" + b);
             } else {
                 _.each(ModelArray,model2 => {
                     if (model2.name.includes("Wirsten") && model2.Markers().includes("Unconscious") === false) {
@@ -1512,7 +1522,7 @@ log(damageInfo)
                         if (dist < 3) {
                             let b = model2.statBonus.charisma;
                             otherBonus += b;
-                            otherBonusText += "inc. Aura of Protection +" + b;        
+                            otherBonusText.push("Aura of Protection +" + b);     
                         }
                     }
                 })
@@ -1560,6 +1570,9 @@ log(markers)
         if (adv === false && disadv === true) {finalAdv = -1};
         let saveRollResult = D20(finalAdv);
         
+        otherBonusText = "Inc. " + otherBonusText.toString();
+
+
         if (dc === false) {
             //display result in chat immediately
             if (fail === true) {
@@ -1580,7 +1593,7 @@ log(markers)
             saveTotal = saveRollResult.roll + bonus;
             saveTip = "<br>Roll: " + saveRollResult.roll + bonusText;
             saveTip += "<br>" + saveRollResult.rollText
-            if (otherBonusText) {saveTip += "<br>" + otherBonusText};
+            if (otherBonusText.length > 0) {saveTip += "<br>" + otherBonusText};
             if (advReasons.length > 0) {
                 saveTip += "<br>" + advReasons.toString();
             }
@@ -2108,6 +2121,12 @@ log(weapon)
         if (defMarkers.includes("Haste")) {
             ac += 2;
         }
+        if (defMarkers.includes("Warding Bond")) {
+            ac += 1;
+        }
+
+
+
 
         let cover = CheckCover(defender);
         if (cover === "Light") {
@@ -3921,6 +3940,19 @@ log(rituals)
             macro = macro.replace(";5;",";-1;");
             ButtonInfo("Enervation",macro);
         }
+        if (itemName === "Bracelet of Warding") {
+            macro = MacroReplace(SpellInfo["Sanctuary"].macro);
+            macro = macro.replace("%Level%","-1");
+            ButtonInfo("Sanctuary",macro);
+            macro = MacroReplace(SpellInfo["Warding Bond"].macro);
+            macro = macro.replace("%Level%","-1");
+            ButtonInfo("Warding Bond",macro);
+        }
+
+
+
+
+
         if (itemName === "Holy Symbol of Ravenkind") {
             outputCard.body.push("As a reaction, when a creature you can see within 30 feet of you would be reduced to 0 hit points, you can expend 2 charges to cause that creature to drop to 1 hit point instead. That creature gains immunity to all damage until the start of its next turn.");
             info = {
