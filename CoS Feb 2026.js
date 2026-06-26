@@ -1512,7 +1512,7 @@ log(damageInfo)
                         if (dist < 3) {
                             let b = model2.statBonus.charisma;
                             otherBonus += b;
-                            otherBonusText += " Aura of Protection +" + b;        
+                            otherBonusText += "inc. Aura of Protection +" + b;        
                         }
                     }
                 })
