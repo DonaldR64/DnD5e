@@ -4867,7 +4867,25 @@ log(state.DnD.spellList)
     }
 
 
-
+    const Ass = (msg) => {
+        //adjusts spell slots of character - GM function
+        if (!msg) {return};
+        let model = ModelArray[msg.selected[0]._id];
+        if (!model) {return};
+        let level = parseInt(msg.content.split(";")[1]);
+        let ss = SpellSlots(model,level);
+        if (ss === 0) {
+            sendChat("GM","/w GM - no spell slots of that level");
+            return
+        } else {
+            ss -= 1;
+            AttributeSet(model.charID,"lvl" + level + "_slots_expended",ss);
+            sendChat("GM","/w GM - spell slots adjusted");
+            if (ss === 0) {
+                sendChat("GM","/w GM - last spell slot of that level");
+            }
+        }
+    }
 
 
 
@@ -5085,6 +5103,12 @@ log("Is Spell: " + model.isSpell)
             case '!Search':
                 Search(msg);
                 break;
+            case '!Ass':
+                //adjust spell slots
+                Ass(msg);
+                break;
+
+
 
 
         }
