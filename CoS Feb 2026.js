@@ -660,7 +660,7 @@ log(statusmarkers)
         let array = [];
         _.each(temp,id => {
             let model = ModelArray[id];
-log(model.name + ": " + id)
+//log(model.name + ": " + id)
             array.push(model);
         })
         return array;
@@ -684,7 +684,7 @@ log(model.name + ": " + id)
         let array = [];
         _.each(temp,id => {
             let model = ModelArray[id];
-log(model.name + ": " + id)
+//log(model.name + ": " + id)
             array.push(model);
         })
         return array;
@@ -2693,7 +2693,6 @@ log(spell)
         if (Array.isArray(emotes) === false) {
             emotes = [emotes];
         }
-log(emotes)
         let final = "";
         for (let i=0;i<emotes.length;i++) {
             if (i>0) {final += "<br>"};
@@ -2708,9 +2707,7 @@ log(emotes)
                     let char1 = emote.indexOf("<<") + 2;
                     let char2 = emote.indexOf(">>");
                     let substring = emote.substring(char1,char2);
-log(substring)
                     let damageResults = RollDamage(substring)
-log(damageResults)
                     let tip = damageResults.diceText;
                     tip = '[' + damageResults.total + " " + damageResults.damageType + '](#" class="showtip" title="' + tip + ')';
                     emote = emote.replace("<<" + substring + ">>",tip);
@@ -3049,8 +3046,8 @@ log(level)
     const EndSpell = (spellID) => {
         if (!spellID) {return};
         let spell = state.DnD.spellList.find((e)=> e.spellID === spellID);
-log("In End Spell")
-log(spell)
+//log("In End Spell")
+//log(spell)
         if(!spell) {return}
         let caster = ModelArray[spell.casterID];
 
