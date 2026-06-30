@@ -478,6 +478,7 @@ const DnD = (() => {
         Markers() {
             let statusmarkers = this.token.get("statusmarkers");
             statusmarkers = statusmarkers.split(",");
+            statusmarkers = statusmarkers.filter((e) => e !== "undefined");
 log(statusmarkers)
             let markers = [];
             _.each(statusmarkers,marker => {
@@ -2919,11 +2920,13 @@ log(level)
             } else {
                 let squares = caster.Distance(target);
                 let distance = squares * pageInfo.scale;
+
                 if (distance > spell.range) {
                     errorMsg.push(target.name + " is out of Range");
+                } else if (target.Markers().includes("Invisible") && spell.autoHit === "Yes") {
+                    errorMsg.push(target.name + " Is Invisible and cannot be targetted");
                 } else {
                     targetIDs.push(Tag[i]);
-                    //targets.push(target);
                 }
             }
         }
@@ -2940,7 +2943,6 @@ log(level)
                 errorMsg.push("Spell is cast but fails, as target is not Humanoid");
             }
         }
-
 
 
 
@@ -3131,8 +3133,8 @@ log(spell)
         }
 
         state.DnD.spellList.push(spell);
-log("In Add Spell")
-log(spell)
+//log("In Add Spell")
+//log(spell)
         if (spell.concentration === true) {
             if (state.DnD.conSpell[spell.casterID]) {
                 EndSpell(state.DnD.conSpell[spell.casterID]);
@@ -3150,8 +3152,8 @@ if (spell.name === "Bless") {return}
 
     const CheckDuration = (spellID) => {
         let spell = state.DnD.spellList.find((e) => e.spellID === spellID);
-log("In Check Duration")
-log(spell)
+//log("In Check Duration")
+//log(spell)
         if (parseInt(state.DnD.combatTurn) >= parseInt(spell.endTurn)) {
             EndSpell(spellID);
         }
@@ -3172,12 +3174,10 @@ log(spell)
             if (model.name === "Flaming Sphere") {FlamingSphere(model)};
 
         } else {
-log(model.name)
-log("in party: " + model.inParty)
+
             _.each(ModelArray,m => {
                 if (spells.includes(m.name) && m.id !== model.id) {
-log(m.name)
-log("in party: " + m.inParty)
+
                     if (m.inParty === model.inParty && m.name === "Spirit Guardians") {return};
                     if (Venn(m.Squares(),model.Squares()) === true) {
                         let spellID = m.token.get("gmnotes").toString();
@@ -3263,8 +3263,6 @@ log("in party: " + m.inParty)
             if (saved === "NA") {
                 //needs player to roll
                 outputCard.body.push("Failure means " + model.pronoun.toLowerCase() + spell.failText)
-log("Here")
-
 
             } else {            
                 if (saved === true) {
@@ -3278,7 +3276,6 @@ log("Here")
             model.token.set("status_" + Markers[spell.name],true);
         }
         if (saved === "NA") {
-log("Here2")
             if (Markers[spell.name]) {
                  state.DnD.saveMarkers[model.tokenID] = spell.name;
             }
@@ -3321,7 +3318,6 @@ log("Here2")
         let model = ModelArray[msg.selected[0]._id];
         if (!model) {return}
 
-log(model.spells)
         SetupCard(model.name,"Available Spells",model.displayScheme);
         //cantrips
         if (model.spells.cantrip) {
@@ -3356,8 +3352,6 @@ log(model.spells)
             }
         }
 
-log("Spell Slots: " + availableSS)
-log("Cumulative Slots: " + cumulativeSS)
 
         for (let i=1;i<10;i++) {
             if (cumulativeSS[i] === 0) {continue};
@@ -3366,7 +3360,6 @@ log("Cumulative Slots: " + cumulativeSS)
             //show prepared spells for that level with a button
             let spells = model.spells[i];
             let buttons = [];
-//
             _.each(spells,spell => {
                 let name = spell.name;
                 if (Attribute(model.charID,spell.prepared) == 1) {
@@ -3437,7 +3430,6 @@ log("Cumulative Slots: " + cumulativeSS)
                     rituals.push("[hr]");
                 }
             }
-log(rituals)
             if (rituals.length > 0) {
                 outputCard.body.push("[B][U]Rituals[/b][/u]");
                 outputCard.body.push("Out of Combat Only");
@@ -4647,21 +4639,20 @@ log(rituals)
 
     const ModelsRound = (model) => {
         //check any spell areas model is in, eg Moonbeam, entangle etc
-log("Start Models Round: " + model.name)
         EffectCheck(model,"Start");
         //Spells cast by model and ongoing - check duration
         let spellIDs = [];
         if (state.DnD.conSpell[model.id]) {
             spellIDs.push(state.DnD.conSpell[model.id]);
         }
-log("Con Spells: " + spellIDs)
+//log("Con Spells: " + spellIDs)
         let arr2 = state.DnD.regSpells[model.id] || [];
-log("Reg Spells: " + arr2)
+//log("Reg Spells: " + arr2)
         if (arr2 && arr2.length > 0) {
             spellIDs = spellIDs.concat(arr2);
         }
-log("Own Spell IDs")
-log(spellIDs)
+//log("Own Spell IDs")
+//log(spellIDs)
         for (let i=0;i<spellIDs.length;i++) {
             let spellID = spellIDs[i];
             CheckDuration(spellID);
@@ -4677,9 +4668,9 @@ log(spellIDs)
         //spells on model based on markers, then check spell to see if/when save/ends
         let spellNames = model.Markers(); //could also be conditions, will screen out below
         for (let i=0;i<spellNames.length;i++) {
-log("Marker on Model")
+//log("Marker on Model")
             let spellName = spellNames[i];
-log(spellName)
+//log(spellName)
             let spell = FindSpell(spellName,model.id);
             if (!spell) {continue};
 
@@ -4758,9 +4749,6 @@ log(spellName)
 
     const SpellCheck = (spellID,model) => {
         let spell = state.DnD.spellList.find((e) => e.spellID === spellID);
-log("In Spell Check")
-log("Pre")
-log(spell)
         let savingThrow = (spell.actionSave) ? spell.actionSave:(spell.savingThrow) ? spell.savingThrow:false;
         let spellEnds = (savingThrow === "auto") ? true:false;
 
@@ -4787,8 +4775,7 @@ log(spell)
                 }
             }
         }
-log("Post")
-log(state.DnD.spellList)
+
         outputCard.body.push(text);
         return spellEnds;
     }
@@ -4905,7 +4892,7 @@ log(state.DnD.spellList)
         }
         //check if entered area effect such as Moonbeam, Web
         if (model && (tok.get("left") !== prev.left || tok.get("top") !== prev.top) && state.DnD.combatTurn > 0) {
-log("Is Spell: " + model.isSpell)
+//log("Is Spell: " + model.isSpell)
             if (model.isSpell) {
                 EffectCheck(model,"SpellMove");
             } else {
@@ -4913,27 +4900,6 @@ log("Is Spell: " + model.isSpell)
                 SpellMove(model);
             }
         }
-
-
-        let covenNames = ["Morgantha","Offalia","Bella"];
-        if (tok.get("bar1_value") !== prev.bar1_value && covenNames.some(r => prev.name.includes(r))) {
-            let tokens = findObjs({
-                _pageid: Campaign().get("playerpageid"),
-                _type: "graphic",
-                _subtype: "token",
-                layer: "objects",
-            })
-            _.each(tokens,token => {
-    log(token.get("name"))
-                _.each(covenNames, name => {
-                    if (token.get("name").includes(name)) {
-                        token.set("bar1_value",tok.get("bar1_value"));
-                    }
-                })
-            })
-        }
-
-
 
 
 

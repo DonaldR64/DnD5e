@@ -470,7 +470,6 @@
             range: 60,
             autoHit: "Yes",
             spellType: "DirectAttack",
-            autoHit: "Yes",
             base: '4d8',
             savingThrow: "dexterity",
             saveEffect: "Half Damage",
