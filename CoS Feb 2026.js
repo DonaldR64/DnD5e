@@ -3901,8 +3901,6 @@ log(rituals)
 
 
     const UseItem = (msg) => {
-//change to
-//check resources and create macros
         if (!msg.selected) {return};
         let id = msg.selected[0]._id;
         let model = ModelArray[id];
@@ -3933,24 +3931,6 @@ log(rituals)
             outputCard.body.push("[B]" + tip + "[/b]" + " HP are restored")
         }
 
-/*
-        if (itemName === "Potion of Healing" || itemName === "Potion of Greater Healing") {
-            let total = 0;
-            let rolls = [];
-            if (itemName === "Potion of Healing") {d = 2} else {d = 4};
-
-            for (let i=0;i<4;i++) {
-                roll = randomInteger(4);
-                rolls.push(roll);
-                total += roll;
-            }
-            total += d;
-            let tip = "Rolls: " + rolls.toString() + " + " + d;
-            tip = '[' + total + '](#" class="showtip" title="' + tip + ')';
-
-            outputCard.body.push("[B]" + tip + "[/b]" + " HP are restored")
-        }
-*/
         if (itemName === "Twilight Crest") {
             macro = MacroReplace(SpellInfo["Aid"].macro);
             macro = macro.replace("%Level%","-1");
