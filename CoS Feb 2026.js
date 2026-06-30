@@ -3912,6 +3912,28 @@ log(rituals)
 
         SetupCard(model.name,itemName,model.displayScheme);
 
+        let healPotions = {
+            "Potion of Healing": 2,
+            "Potion of Greater Healing": 4,
+            "Potion of Superior Healing": 8,
+        }
+
+        if (Object.keys(healPotions).includes(itemName)) {
+            let d = healPotions[itemName];
+            let total = d;
+            let rolls = [];
+            for (let i=0;i<d;i++) {
+                roll = randomInteger(4);
+                rolls.push(roll);
+                total += roll;
+            }
+            let tip = "Rolls: " + rolls.toString() + " + " + d;
+            tip = '[' + total + '](#" class="showtip" title="' + tip + ')';
+            outputCard.subtitle = outputCard.subtitle + " [" + d + "d4 + " + d + "]";
+            outputCard.body.push("[B]" + tip + "[/b]" + " HP are restored")
+        }
+
+/*
         if (itemName === "Potion of Healing" || itemName === "Potion of Greater Healing") {
             let total = 0;
             let rolls = [];
@@ -3928,7 +3950,7 @@ log(rituals)
 
             outputCard.body.push("[B]" + tip + "[/b]" + " HP are restored")
         }
-
+*/
         if (itemName === "Twilight Crest") {
             macro = MacroReplace(SpellInfo["Aid"].macro);
             macro = macro.replace("%Level%","-1");
