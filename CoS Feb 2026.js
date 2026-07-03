@@ -3940,7 +3940,11 @@ if (spell.name === "Bless") {return}
             ButtonInfo("Warding Bond",macro);
         }
 
-
+        if (itemName === "Potion of Fire Breath") {
+            emote = "As a bonus action, you breath fire at a target in 30ft, dealing <<4d6,fire>> damage, 1/2 that on a DC13 Dex Save. A total of 3 Breaths can be done, within an hour."
+            emote = EmoteSub(emote,model.name);
+            outputCard.body.push(emote);
+        }
 
 
 
