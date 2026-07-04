@@ -2269,7 +2269,12 @@ log(weapon)
             }
 
 
-
+            if (weapon.info === "Ray of Light") {
+                defender.token.set({
+                    aura2_radius: 1,
+                    aura2_color: "#ffff00",
+                })
+            }
 
 
 
@@ -2408,6 +2413,10 @@ log(weapon)
             advantage = true;
             advText.push("Guiding Bolt");
         };
+        if (defender.token.get("aura2_color") === "#ffff00") {
+            advantage = true;
+            advText.push("Ray of Light");
+        }
         if (defMarkers.includes("Dodge")) {
             disText.push("Defender taking Dodge Action");
             disadvantage = true;
@@ -2465,7 +2474,7 @@ log(weapon)
         let abilName = Tag[1];
         let emote = Tag[2];
         emote = emote.replace(/"/g,"");
-        emote = EmoteSub(emote,model.name)
+        emote = EmoteSub(emote,model.name || "");
         SetupCard(model.name,abilName,model.displayScheme);
         outputCard.body.push(emote);
         PrintCard();
@@ -2689,7 +2698,7 @@ log(spell)
         return final;        
     }
 
-    const EmoteSub = (emotes,casterName,level,targetName) => {
+    const EmoteSub = (emotes,casterName = "",level,targetName) => {
         if (Array.isArray(emotes) === false) {
             emotes = [emotes];
         }
@@ -4334,10 +4343,17 @@ if (spell.name === "Bless") {return}
                     hp: 255,
                     change: true,
                 },
-
             },
-
-
+        "The Abbot":
+            {
+                type: "Transform",
+                "One": {
+                    cID: "-OwhrV7fIFJPNWPIOk1e",
+                    size: 140,
+                    hp: 255,
+                    change: true,
+                },
+            },
         }
 
         let change = shapes[cName][shape].change || false;
