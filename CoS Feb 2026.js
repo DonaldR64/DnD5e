@@ -4888,6 +4888,21 @@ if (spell.name === "Bless") {return}
         }
     }
 
+    const LetGo = (msg) => {
+        let distance = parseInt(msg.content.split(";")[1]) || 0;
+        let d = distance/10;
+        let rolls = [];
+        let damage = 0;
+        for (let i=0;i<d;i++) {
+            let roll = randomInteger(6);
+            damage += roll;
+            rolls.push(roll);
+        }
+        SetupCard("Falling Damage","","Neutral");
+        let tip = '[' + damage + '](#" class="showtip" title="' + rolls.toString() + ') ';
+        outputCard.body.push("The PC takes " + tip + " falling damage as it hits the ground from " + distance + " ft.");
+        PrintCard();
+    }
 
 
 
@@ -5086,6 +5101,9 @@ if (spell.name === "Bless") {return}
             case '!Ass':
                 //adjust spell slots
                 Ass(msg);
+                break;
+            case '!LetGo':
+                LetGo(msg);
                 break;
 
 
