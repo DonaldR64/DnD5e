@@ -4325,6 +4325,17 @@ if (spell.name === "Bless") {return}
                 },
 
             },
+        "Ithuriel": 
+            {
+                type: "Transform",
+                "Two": {
+                    cID: "-Owi3DvxU57R4Y4ZhDYm",
+                    size: 210,
+                    hp: 255,
+                    change: true,
+                },
+
+            },
 
 
         }
