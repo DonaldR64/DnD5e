@@ -8,6 +8,8 @@ const DnD = (() => {
     let ModelArray = {};
     let nameArray = {};
 
+    let Beacon = false;
+
     const pageInfo = {name: "",page: "",gridType: "",scale: 0,width: 0,height: 0};
 
     const playerCodes = {
@@ -1508,6 +1510,10 @@ log(damageInfo)
             otherBonus += 1;
             otherBonusText.push("Warding Bond +1");
         }
+        if (Beacon === true && model.inParty === true) {
+            otherBonus += 1;
+            otherBonusText.push("Beacon of Hope +1");        
+        }
 
 
 
@@ -2123,6 +2129,9 @@ log(weapon)
             ac += 2;
         }
         if (defMarkers.includes("Warding Bond")) {
+            ac += 1;
+        }
+        if (Beacon === true && model.inParty === true) {
             ac += 1;
         }
 
@@ -2795,6 +2804,9 @@ log(spell)
             let cover = CheckCover(defender);
             if (cover === "Light") {
                 ac += 2;
+            }
+            if (Beacon === true && model.inParty === true) {
+                ac += 1;
             }
 
 
