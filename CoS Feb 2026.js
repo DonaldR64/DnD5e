@@ -4366,7 +4366,31 @@ if (spell.name === "Bless") {return}
                     change: true,
                 },
             },
+        "Emil": 
+            {
+                type: "Wild Shape",
+                "Human": {
+                    cID: "-NQWPwBhLxnDrEz9X00l",
+                    size: 70,
+                },
+                "Werewolf": {
+                    cID: "-OwmwYuy8Q1tGJwgg_yB",
+                    size: 70,
+                    hp: 96,
+                },
+            },
+
+
+
+
         }
+
+
+
+
+
+
+
 
         let change = shapes[cName][shape].change || false;
 
