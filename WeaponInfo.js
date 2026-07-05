@@ -6,6 +6,12 @@
             type: "Melee",
             sound: "Sword",
         },
+        'Longsword (2H)': {
+            base1: '1d10,slashing',
+            properties: "Versatile",
+            type: "Melee",
+            sound: "Sword",
+        },
         Dagger: {
             base1: '1d4,slashing',
             properties: "Finesse, Thrown",
