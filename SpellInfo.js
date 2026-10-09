@@ -1,5 +1,5 @@
 
-    //Mar 24
+    //Oct 8
     const SpellInfo = {
         "Aid": {
             name: "Aid",
@@ -751,7 +751,7 @@
             macro: '!Spell;Evards Black Tentacles;4',
         },
 
-        
+
 
 
 
