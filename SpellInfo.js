@@ -751,6 +751,11 @@
             macro: '!Spell;Evards Black Tentacles;4',
         },
 
+        
+
+
+
+
 
         "Flaming Wave": {
             //Izek
@@ -1079,6 +1084,27 @@
             fx: "rocket-slime",
             macro: "!Spell;Melf's Acid Arrow;%Level%;%Selected%;%Target%",
         },
+
+        "Mirror Image": {
+            name: "Mirror Image",
+            level: 2,
+            range: 5,
+            spellType: "Misc",
+            emote: "Three illusory duplicates of yourself appear in your space. Until the spell ends, the duplicates move with you and mimic your actions, shifting position so it’s impossible to track which image is real. You can use your action to dismiss the illusory duplicates. Each time a creature targets you with an attack during the spell’s duration, roll a d20 to determine whether the attack⁠ instead t⁠argets one of your duplicates. If you have three duplicates, you must roll a 6 or higher to change the attack’s target to a duplicate. With two duplicates, you must roll an 8 or higher. With one duplicate, you must roll an 11 or higher.",
+            macro: "!Spell;Mirror Image;2",
+            sound: "Angels",
+        },
+
+        "Misty Step": {
+            name: "Misty Step",
+            level: 2,
+            range: 5,
+            spellType: "Misc",
+            emote: "",
+            macro: "!Spell;Misty Step;2",
+            sound: "Briefly surrounded by silvery mist, you telep⁠ort up to 30 feet to an unoccupied space that you can see.",
+        },
+
 
 
 
