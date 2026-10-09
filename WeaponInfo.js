@@ -164,6 +164,7 @@
         Handaxe: {
             base1: '1d6,slashing',
             properties: "Thrown",
+            range: [20,20],
             type: "Melee,Ranged",
             sound: "Sword",
         },
@@ -172,4 +173,15 @@
             type: "Melee",
             sound: "Staff",
         },
+        "Spear of the Huntress": {
+            base1: "1d6,piercing",
+            properties: "Thrown",
+            type: "Melee,Ranged",
+            sound: "Sword",
+            range: [20,60],
+        }
+
+
+
+
     }

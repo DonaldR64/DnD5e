@@ -3894,7 +3894,11 @@ if (spell.name === "Bless") {return}
                 if (types.some(e => model.type.includes(e))) {
                     let distance = caster.Distance(model) * pageInfo.scaleNum;
                     if (distance <= range) {
-                        let saveResult = Save(model,caster.spellDC,"wisdom");
+                        let dc = caster.spellDC;
+                        if (caster.name === "Wirsten") {
+                            dc += 2; //Icon
+                        }
+                        let saveResult = Save(model,dc,"wisdom");
                         let tip = '(#" class="showtip" title="' + saveResult.tip + ')';
                         if (saveResult.save === true) {
                             outputCard.body.push(model.name + " " +  '[saves]' + tip);
@@ -3970,7 +3974,7 @@ if (spell.name === "Bless") {return}
 
 
         if (itemName === "Holy Symbol of Ravenkind") {
-            outputCard.body.push("As a reaction, when a creature you can see within 30 feet of you would be reduced to 0 hit points, you can expend 2 charges to cause that creature to drop to 1 hit point instead. That creature gains immunity to all damage until the start of its next turn.");
+            outputCard.body.push("[B]Dawn's Grace[/b]<br>As a reaction, when a creature you can see within 30 feet of you would be reduced to 0 hit points, you can expend 2 charges to cause that creature to drop to 1 hit point instead. That creature gains immunity to all damage until the start of its next turn.");
             info = {
                 action: "!EmoteAbility;Dawn's Grace;The selected character is affected by Dawn's Grace (GM)",
                 phrase: "Dawn's Grace",
@@ -3979,7 +3983,7 @@ if (spell.name === "Bless") {return}
             outputCard.body.push("[INLINE]")
             outputCard.body.push("[hr]");
 
-            outputCard.body.push("As an action, you can expend 1 charge and choose one creature you can see within 30 feet of you. All of the following conditions on that creature end: blinded, charmed, deafened, frightened, paralyzed, poisoned, and stunned.");
+            outputCard.body.push("[B]Light of Hope[/b]<br>As an action, you can expend 1 charge and choose one creature you can see within 30 feet of you. All of the following conditions on that creature end: blinded, charmed, deafened, frightened, paralyzed, poisoned, and stunned.");
             info = {
                 action: "!EmoteAbility;Light of Hope;The selected character is affected by Light of Hope (GM)",
                 phrase: "Light of Hope",
@@ -3988,7 +3992,7 @@ if (spell.name === "Bless") {return}
             outputCard.body.push("[INLINE]")
             outputCard.body.push("[hr]");
 
-            outputCard.body.push("As an action, you can expend 2 charges to cause holy power to radiate from the symbol in a 30-foot radius for 1 minute. Nonhostile creatures in that radius deal an extra 1d4 radiant damage when they hit with a weapon attack.");
+            outputCard.body.push("[B]Sun's Blessing[/b]<br>As an action, you can expend 2 charges to cause holy power to radiate from the symbol in a 30-foot radius for 1 minute. Nonhostile creatures in that radius deal an extra 1d4 radiant damage when they hit with a weapon attack.");
             info = {
                 action: "!UseItem;Sun's Blessing",
                 phrase: "Sun's Blessing",
@@ -4005,7 +4009,39 @@ if (spell.name === "Bless") {return}
             })
             outputCard.body.push("All friendly character's within this Aura may add 1d4 radiant damage with their weapons");
         }
+        if (itemName === "Icon of Dawn's Grace") {
+            outputCard.body.push("[B]Protection from Good and Evil[/b]<br>You can present the icon as an action to grant yourself and each creature within 30 feet of you the effect of a protection from evil and good spell against fiends and undead until the start of your next turn. Once used, this property can’t be used again until the next dawn.");
+            info = {
+                action: "!EmoteAbility;Protection from Good and Evil;All Friendly characters in 30ft gain Prot. from Good and Evil(GM)",
+                phrase: "Protection from Good and Evil",
+            }
+            outputCard.inline.push(info);
+            outputCard.body.push("[INLINE]")
+            outputCard.body.push("[hr]");
 
+            outputCard.body.push("[B]Augury[/b]<br>You can use an action to cast an augury spell from the icon, with no material components required. Once used, this property can't be used again until the next dawn.");
+            info = {
+                action: "!EmoteAbility;Augury;The character may ask if the intended action will bring Weal or Woe",
+                phrase: "Augury",
+            }
+            outputCard.inline.push(info);
+            outputCard.body.push("[INLINE]")
+            outputCard.body.push("[hr]");
+
+            outputCard.body.push("[B]Cure Wounds[/b]<br>While holding the icon, you can take an action to heal one creature that you can see within 30 feet of you. The target regains 3d8 + 3 hit points, unless it is an undead, a construct, or a fiend. Once used, this property can't be used again until the next dawn.");
+            info = {
+                action: "!EmoteAbility;Cure Wounds;The target regains <<3d8+3,>> hitpoints",
+                phrase: "Cure Wounds",
+            }
+            outputCard.inline.push(info);
+            outputCard.body.push("[INLINE]")
+            outputCard.body.push("[hr]");
+
+
+
+
+
+        }
 
 
             PrintCard();
