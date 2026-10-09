@@ -1,5 +1,5 @@
 const DnD = (() => {
-    const version = '2026.6.25';
+    const version = '2026.10.8';
     if (!state.DnD) {state.DnD = {}};
 
     //various constants used in game
@@ -2299,7 +2299,9 @@ log(weapon)
             attacker.token.set("status_" + Markers["Zephyr Strike"],false);
         }
 
-
+        if (weaponName === "Spear of the Huntress" && inReach === false) {
+            outputCard.body.push("The Spear flys back to its wielder");
+        }
 
         PlaySound(weapon.sound);
 
