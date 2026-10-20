@@ -1300,6 +1300,23 @@
             sound: "Angels",
         },
 
+        "Scorching Ray": {
+            name: "Scorching Ray",
+            level: 2,
+            spellType: "DirectAttack",
+            range: 120,
+            autoHit: "No",
+            base: '2d6',
+            damageType: "fire",
+            sound: "Blaster",
+            emote: "Three rays of fire are hurled at your opponents",
+            fx: "",
+            macro: '!Spell;Ray of Frost;0;%Selected%;%Target1%;%Target2%;%Target3%',
+        },
+
+
+
+
         "Searing Smite": {
             name: "Searing Smite",
             level: 1,
