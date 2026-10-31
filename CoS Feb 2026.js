@@ -2699,7 +2699,7 @@ log(spell)
         if (spell.duration && spell.name !== "Breathe") {
             emotes.push("The Spell lasts " + spell.duration + " rounds. ");
         }
-        if (spell.concentration === true) {
+        if (spell.concentration === true && casterName !== "Strahd") {
             emotes.push("The Spell requires Concentration");
         }
         let final = EmoteSub(emotes,casterName,level,targetName);
@@ -2908,6 +2908,7 @@ log(spell)
 
         let spell = DeepCopy(SpellInfo[spellName]);
         spell.spell = true;
+        spell.level = level;
 
         if (level === -1) {
             //items, scrolls
@@ -3155,7 +3156,7 @@ log(level)
         state.DnD.spellList.push(spell);
 //log("In Add Spell")
 //log(spell)
-        if (spell.concentration === true) {
+        if (spell.concentration === true && ModelArray[spell.casterID].name.includes("Strahd") === false) {
             if (state.DnD.conSpell[spell.casterID]) {
                 EndSpell(state.DnD.conSpell[spell.casterID]);
             } 
@@ -3650,7 +3651,8 @@ if (spell.name === "Bless") {return}
         for(let a=0;a<abilArray.length;a++) {
             abilArray[a].remove();
         } 
-
+log(spell.level)
+log(spell.tempSize)
         if (spell.spellType !== "Ongoing") {
             AddAbility("Cast " + spell.name,action,charID);
             if (isNaN(spell.tempSize)) {

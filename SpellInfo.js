@@ -1561,6 +1561,7 @@
         },
 
 
+
         "Thorn Whip": {
             name: "Thorn Whip",
             level: 0,
@@ -1611,6 +1612,30 @@
             tempSize: 15,
             fx: 'breath-smoke',
         },
+
+
+
+
+        "Vampiric Touch": {
+            name: "Vampiric Touch",
+            level: 3,
+            spellType: "DirectAttack",
+            range: 5,
+            autoHit: "No",
+            base: '3d6',
+            sLevel: [0,0,0,"3d6","4d6","5d6","6d6","7d6"],    
+            damageType: "necrotic",
+            sound: "Taser",
+            note: "The caster regains hp equal to 1/2 the damage",
+            macro: '!Spell;Vampiric Touch;3;%Selected%;%Target%',
+        },
+
+
+
+
+
+
+
 
         "Warding Bond": {
             name: "Warding Bond",
