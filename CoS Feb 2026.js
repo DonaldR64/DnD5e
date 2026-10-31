@@ -1,5 +1,5 @@
 const DnD = (() => {
-    const version = '2026.10.8';
+    const version = '2026.10.31';
     if (!state.DnD) {state.DnD = {}};
 
     //various constants used in game
@@ -339,6 +339,7 @@ const DnD = (() => {
                 }
             }
 
+            this.senses = aa.npc_senses || " ";
             this.special = aa.special || " ";
 
             this.token.set({
@@ -2331,6 +2332,9 @@ log(weapon)
         let attNegative = ["Blind","Frightened","Poisoned","Disadvantage","Heat Metal","Blindness"];
         let defNegative = ["Blind","Disadvantage","Blindness","Slow","Reckless"];
 
+        
+
+
         let advantage = false;
         let advText = []; 
         let disadvantage = false;
@@ -2381,6 +2385,31 @@ log(weapon)
                 disText.push("Exhaustion Level 3+");
             }
         }
+
+        //Fog Cloud
+        let mapTokens = findObjs({
+            _pageid: Campaign().get("playerpageid"),
+            _type: "graphic",
+            _subtype: "token",
+            layer: "map",
+            name: "Fog Cloud",
+        });
+        for (let i=0;i<mapTokens.length;i++) {
+            let mapToken = mapTokens[i];
+            let upperX = mapToken.get("left") - (mapToken.get('width')/2);
+            let upperY = mapToken.get("top") - (mapToken.get('height')/2);
+            let lowerX =  mapToken.get("left") + (mapToken.get('width')/2);
+            let lowerY = mapToken.get("top") + (mapToken.get('height')/2);
+            if (attacker.token.get("left") >= upperX && attacker.token.get('left') <= lowerX && attacker.token.get("top") >= upperY && attacker.token.get("top") <= lowerY && attacker.senses.includes("blindsight") === false) {
+                disText.push("Defender Unable to see due to Fog Cloud");
+                disadvantage = true;
+            }
+            if (defender.token.get("left") >= upperX && defender.token.get('left') <= lowerX && defender.token.get("top") >= upperY && defender.token.get("top") <= lowerY && defender.senses.includes("blindsight") === false) {
+                advText.push("Defender Unable to see due to Fog Cloud")
+                advantage = true;
+            }
+        }
+
 
         //ranged weapons over 'normal' range; note that thrown has changed to ranged in attack routine
         if (inReach === false && damageInfo.type === "Ranged" && distance > damageInfo.range[0]) {
