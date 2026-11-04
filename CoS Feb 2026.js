@@ -2937,6 +2937,7 @@ log(spell)
 
         let spell = DeepCopy(SpellInfo[spellName]);
         spell.spell = true;
+        let originalLevel = spell.level;
         spell.level = level;
 
         if (level === -1) {
@@ -3028,7 +3029,7 @@ log(level)
                 }
             })
         }
-        if (level > spell.level && spell.sLevel) {
+        if (level > originalLevel && spell.sLevel) {
             spell.base = spell.sLevel[level] || 0;
         }
 
