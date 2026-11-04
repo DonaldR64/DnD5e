@@ -2598,7 +2598,7 @@ log(spell)
         }
         if (abilityName === "Reckless") {
             SetupCard(attacker.name,"Reckless",attacker.displayScheme);
-            outputCard.body.push("The Berserker gains advantage on all melee weapon attack rolls during that turn, but attack rolls against it have advantage.")
+            outputCard.body.push("The " + attacker.name + " gains advantage on all melee weapon attack rolls during that turn, but attack rolls against it have advantage.")
             attacker.token.set("status_" + Markers.Reckless,true);
         }
         if (abilityName === "AlchemistStone") {
