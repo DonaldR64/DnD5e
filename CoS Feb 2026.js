@@ -3128,13 +3128,16 @@ log(level)
         }
 
         if (caster) {
-            if (spell.concentration === true) {
+            if (spell.concentration === true && caster.name !== "Strahd" && caster.name !== "Vilnius") {
                 state.DnD.conSpell[caster.id] = "";
                 outputCard.body.push("[" + spell.name + " Ends]");
             } else {
-                index = state.DnD.regSpells[caster.id].indexOf(spell.spellID);
-                if (index > -1) {
-                    state.DnD.regSpells[caster.id].splice(index,1);
+                let regSpells = state.DnD.regSpells[caster.id];
+                if (regSpells) {
+                    index = regSpells.indexOf(spell.spellID);
+                    if (index > -1) {
+                        state.DnD.regSpells[caster.id].splice(index,1);
+                    }
                 }
             }
         }
