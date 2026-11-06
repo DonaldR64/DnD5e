@@ -4459,7 +4459,16 @@ log(spell.tempSize)
                     hp: 96,
                 },
             },
-
+        "Patrina": 
+            {
+                type: "Transform",
+                "Two": {
+                    cID: "-P5nAVJilqyz7XOhmmSD",
+                    size: 70,   
+                    hp: 262,
+                    change: true,
+                },
+            },
 
 
 
