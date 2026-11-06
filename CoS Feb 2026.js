@@ -1950,7 +1950,7 @@ log(weapon)
         }
         if (weapon.properties.includes("Spell")) {
             strWeapon = false;
-            statBonus = 0;
+            statBonus = attacker.spellAttack;
             weapon.magic = "magic";
             if (weapon === "Flame Blade") {
                 let spellID = state.DnD.conSpell[attID];
