@@ -104,6 +104,20 @@
         },
 
 
+        "Blur": {
+            name: "Blur",
+            level: 2,
+            concentration: true,
+            range: 5,
+            duration: 10,
+            spellType: "Misc",
+            macro: "!Spell;Blur;2;%Selected%",
+            sound: "Sound",
+            emote: "The caster's body becomes blurred, shifting and wavering to all who can see. For the duration, any creature has disadvantage on attack rolls against the caster.",
+        },
+
+
+
 
         "Branding Smite": {
             name: "Branding Smite",

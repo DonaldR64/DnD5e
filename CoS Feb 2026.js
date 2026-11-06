@@ -160,7 +160,7 @@ const DnD = (() => {
         "Reckless": "Effect_Dance::1431931",
         "Zephyr Strike": "Effect_Air::1431910",
         "Warding Bond": "chained-heart",
-
+        "Blur": "aura",
 
     }
 
@@ -2461,6 +2461,12 @@ log(weapon)
             disText.push("Defender taking Dodge Action");
             disadvantage = true;
         }
+        if (defMarkers.includes("Blur")) {
+            disText.push("Defender is Blurred");
+            disadvantage = true;
+        }
+
+
         creatTypes = ["aberation","celestial","elemental","fey","fiend","undead"];
         let other = creatTypes.some(type => attacker.type.toLowerCase().includes(type));
 
@@ -2728,7 +2734,7 @@ log(spell)
         if (spell.duration && spell.name !== "Breathe") {
             emotes.push("The Spell lasts " + spell.duration + " rounds. ");
         }
-        if (spell.concentration === true && casterName !== "Strahd") {
+        if (spell.concentration === true && casterName !== "Strahd" && casterName !== "Vilnius") {
             emotes.push("The Spell requires Concentration");
         }
         let final = EmoteSub(emotes,casterName,level,targetName);
