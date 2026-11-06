@@ -201,6 +201,26 @@
             fx: 'explode-magic',
         },
 
+        "Chain Lightning": {
+            name: "Chain Lightning",
+            level: 6,
+            spellType: "DirectAttack",
+            range: 150,
+            autoHit: "Yes",
+            base: '10d8',
+            damageType: "lightning",
+            savingThrow: "dexterity",
+            saveEffect: "Half Damage",   
+            sound: "Laser",
+            emote: "A bolt of lightning strikes the target, then chains to the other targets. Each must make a Dex saving throw for half damage",
+            fx: "",
+
+        },
+
+
+
+
+
         "Chill Touch": {
             name: "Chill Touch",
             level: 0,
@@ -590,6 +610,25 @@
             failTextAll: "Creatures that fail drop whatever they are holding and become frightened for the duration. While frightened by this spell, a creature must take the Dash action and move away from the caster by the safest available route on each of its turns, unless there is nowhere to move. If the creature ends its turn in a location where it doesn’t have line of sight to the caster, the creature can make a Wisdom saving throw. On a successful save, the spell ends for that creature.",
         },
 
+        "Finger of Death": {
+            name: "Finger of Death",
+            level: 7,
+            spellType: "DirectAttack",
+            range: 60,
+            autoHit: "Yes",
+            base: '7d8+30',
+            damageType: "necrotic",
+            savingThrow: "constitution",
+            saveEffect: "Half Damage",   
+            sound: "Laser",
+            emote: "You send negative energy coursing through a creature that you can see within range, causing it searing pain. The target must make a Constitution saving throw.",
+            fx: "",
+            macro: '!Spell;Finger of Death;7;%Selected%;%Target%',
+        },
+
+
+
+
         "Fireball": {
             name: "Fireball",
             level: 3,
@@ -946,6 +985,23 @@
             failText: " is Held",
             emote: "The Target can make a Wisdom Save at the end of each of its turns.",
         },
+
+        "Hold Monster": {
+            name: "Hold Monster",
+            level: 5,
+            range: 90,
+            duration: 10,
+            concentration: true,
+            when: "endAll",
+            spellType: "Misc",
+            macro: "!Spell;Hold Monster;%Level%;%Selected%;%Target%",
+            sound: "Sound",
+            savingThrow: "wisdom",
+            saveText: " is not Held.",
+            failText: " is Held (Paralyzed)",
+            emote: "The Target can make a Wisdom Save at the end of each of its turns.",
+        },
+
 
 
         "Ice Knife": {
