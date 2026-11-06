@@ -1302,8 +1302,9 @@ log(damageInfo)
                 }
                 if (resistances.includes("nonmagical") === false && resistances.includes("silver") === false) {
                     resistant = true;
-                    saveTip = "Immune to " + Capit(damageType) + " Damage";
+                    saveTip = "Resistant to " + Capit(damageType) + " Damage";
                 }
+
             } else {
                 resistant = true;
                 saveTip = "Resistant to " + Capit(damageType) + " Damage";
