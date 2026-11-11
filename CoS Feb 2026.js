@@ -2849,7 +2849,7 @@ log(spell)
             if (cover === "Light") {
                 ac += 2;
             }
-            if (Beacon === true && model.inParty === true) {
+            if (Beacon === true && defender.inParty === true) {
                 ac += 1;
             }
 
