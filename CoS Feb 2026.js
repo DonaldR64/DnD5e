@@ -8,7 +8,7 @@ const DnD = (() => {
     let ModelArray = {};
     let nameArray = {};
 
-    let Beacon = false;
+    let Beacon = true;
 
     const pageInfo = {name: "",page: "",gridType: "",scale: 0,width: 0,height: 0};
 
@@ -1695,6 +1695,9 @@ log(markers)
         SetupCard(model.name,"Initiative",model.displayScheme);
         let bonus = model.initBonus + (model.initBonus/10);
         //later add in advantage/disadvantage for initiative here
+
+
+
         let advantage = 0;
         let roll = D20(advantage);
         let total = OutputRoll(roll,bonus);
@@ -2133,7 +2136,7 @@ log(weapon)
         if (defMarkers.includes("Warding Bond")) {
             ac += 1;
         }
-        if (Beacon === true && model.inParty === true) {
+        if (Beacon === true && defender.inParty === true) {
             ac += 1;
         }
 
@@ -2333,7 +2336,10 @@ log(weapon)
         let attNegative = ["Blind","Frightened","Poisoned","Disadvantage","Heat Metal","Blindness"];
         let defNegative = ["Blind","Disadvantage","Blindness","Slow","Reckless"];
 
-        
+        if (defender.name === "Wirsten") {
+            positive = ["Advantage"];
+            defNegative = ["Disadvantage","Slow","Reckless"];
+        }
 
 
         let advantage = false;
@@ -2454,7 +2460,7 @@ log(weapon)
             advantage = true;
             advText.push("Guiding Bolt");
         };
-        if (defender.token.get("aura2_color") === "#ffff00") {
+        if (defender.token.get("aura2_color") === "#ffff00" && defender.token.get("aura2_radius") > 0) {
             advantage = true;
             advText.push("Ray of Light");
         }
